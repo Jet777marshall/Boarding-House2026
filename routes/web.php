@@ -12,6 +12,7 @@ Route::middleware(['auth'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
     Route::get('/tenants', [TenantController::class , 'index'])->name('tenants.index');
+    Route::post('/tenants', [TenantController::class , 'store'])->name('tenants.store');
     Route::get('/tenants/create', [TenantController::class, 'create'])->name('tenants.create');
 });
 

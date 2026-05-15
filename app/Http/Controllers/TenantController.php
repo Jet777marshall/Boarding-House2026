@@ -14,4 +14,8 @@ class TenantController extends Controller
     public function create(){
         return Inertia::render('Tenants/Create');
     }
+
+    public function store(Request $request){
+        dd($request);
+    }
 }
