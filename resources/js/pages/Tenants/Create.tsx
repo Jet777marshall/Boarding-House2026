@@ -18,8 +18,8 @@ const breadcrumbs: BreadcrumbItem[] = [
    name:'',
    company_name:'',
    emergency_contact_number:'',
-   Email:'',
-   Personal_number:'',
+   email:'',
+   address:'',
    personal_number:'',
    Password:'',
  })
@@ -32,31 +32,31 @@ export default function Index() {
                 <form className='space-y-4'>
                     <div className='gap-1.5'>
                         <Label htmlFor="tenant name">Full name</Label>
-                        <Input placeholder="Tenant full name"></Input>
+                        <Input placeholder="Tenant full name" value={data.name}></Input>
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="company name">Company name</Label>
-                        <Input placeholder="Company name or School"></Input>
+                        <Input placeholder="Company name or School" value={data.company_name}></Input>
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="emergency contact number">Emergency Contact number</Label>
-                        <Input placeholder="09XX XXX XXXX"></Input>
+                        <Input placeholder="09XX XXX XXXX" value={data.emergency_contact_number}></Input>
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="personal email">Email</Label>
-                        <Input placeholder="Personal email"></Input>
+                        <Input placeholder="Personal email" value={data.email}></Input>
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="personal number">Personal Phone number</Label>
-                        <Input placeholder="09XX XXX XXXX"></Input>
+                        <Input placeholder="09XX XXX XXXX" value={data.personal_number}></Input>
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="address">Address</Label>
-                        <Textarea placeholder="Full Address"></Textarea>
+                        <Textarea placeholder="Full Address" value={data.address}></Textarea>
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="password">Password</Label>
-                        <Input type="password" placeholder="At least 8 characters, 1 uppercase, 1 number, 1 symbol"></Input>
+                        <Input type="password" placeholder="At least 8 characters, 1 uppercase, 1 number, 1 symbol" value={data.Password}></Input>
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="confirm password">Confirm password</Label>
