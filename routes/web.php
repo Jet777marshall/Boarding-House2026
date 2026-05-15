@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\TenantController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -11,6 +11,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+    Route::get('/tenants', [TenantController::class , 'index'])->name('tenants.index');
+    Route::get('/tenants/create', [TenantController::class, 'create'])->name('tenants.create');
 });
 
 require __DIR__.'/settings.php';
