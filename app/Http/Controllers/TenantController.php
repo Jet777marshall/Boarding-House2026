@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\model\Tenant;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
