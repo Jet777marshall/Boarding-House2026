@@ -26,6 +26,7 @@ export default function Index() {
         email: '',
         address: '',
         birthdate: '',
+        password_confirmation: '',
         personal_number: '',
         password: '',
     })
@@ -93,7 +94,12 @@ export default function Index() {
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="confirm password">Confirm password</Label>
-                        <Input type="password" placeholder="Re-enter password"></Input>
+                        <Input
+                            type="password"
+                            placeholder="Re-enter password"
+                            value={data.password_confirmation}
+                            onChange={(e) => setData('password_confirmation', e.target.value)} // ← Add this
+                        />
                     </div>
                     <Button type="submit">Register</Button>
                 </form>
