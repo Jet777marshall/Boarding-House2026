@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class TenantController extends Controller
 {
@@ -28,7 +30,18 @@ class TenantController extends Controller
             'birthdate' => 'nullable|date',
         ]);
 
-        Tenant::create($request->all());
+        Tenant::create([
+            'user_id' => Auth::id(), // ← Gets the logged-in user's ID
+            'full_name' => $request->full_name,
+            'company_name' => $request->company_name,
+            'emergency_contact_number' => $request->emergency_contact_number,
+            'email' => $request->email,
+            'personal_number' => $request->personal_number,
+            'password' => Hash::make($request->password), // ← Always hash passwords
+            'address' => $request->address,
+            'birthdate' => $request->birthdate,
+        ]);
+
         return redirect()->route('tenants.index')->with('success', 'Tenant registered successfully.');
     }
 }
