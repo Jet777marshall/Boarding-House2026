@@ -5,6 +5,9 @@ import { Textarea } from '@/components/ui/textarea';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm, } from '@inertiajs/react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
+import { CircleAlert } from 'lucide-react';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -16,14 +19,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Index() {
 
     const { data, setData, post, processing, errors } = useForm({
-        user_id:'',
-        fullname: '',
+        user_id: '',
+        full_name: '',
         company_name: '',
         emergency_contact_number: '',
         email: '',
         address: '',
+        birthdate: '',
         personal_number: '',
-        Password: '',
+        password: '',
     })
 
     const handlesubmit = (e: React.FormEvent) => {
@@ -36,9 +40,32 @@ export default function Index() {
             <Head title="Tenants" />
             <div className='w-8/12 p-4'>
                 <form onSubmit={handlesubmit} className='space-y-4'>
+
+                    {Object.keys(errors).length > 0 && (
+                        <Alert variant="destructive">
+                            <CircleAlert className="h-4 w-4" />
+                            <AlertTitle>Validation Error</AlertTitle>
+                            <AlertDescription>
+                                <ul className="list-disc pl-4 space-y-1">
+                                    {Object.values(errors).map((error, index) => (
+                                        <li key={index}>{error}</li>
+                                    ))}
+                                </ul>
+                            </AlertDescription>
+                        </Alert>
+                    )}
                     <div className='gap-1.5'>
                         <Label htmlFor="tenant name">Full name</Label>
-                        <Input placeholder="Tenant full name" value={data.fullname} onChange={(e) => setData('fullname', e.target.value)}></Input>
+                        <Input placeholder="Tenant full name" value={data.full_name} onChange={(e) => setData('full_name', e.target.value)}></Input>
+                    </div>
+                    <div className='gap-1.5'>
+                        <Label htmlFor="birthdate">Birthdate</Label>
+                        <Input
+                            type="date"
+                            id="birthdate"
+                            value={data.birthdate}
+                            onChange={(e) => setData('birthdate', e.target.value)}
+                        />
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="company name">Company name</Label>
@@ -62,7 +89,7 @@ export default function Index() {
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="password">Password</Label>
-                        <Input type="password" placeholder="At least 8 characters, 1 uppercase, 1 number, 1 symbol" value={data.Password} onChange={(e) => setData('Password', e.target.value)}></Input>
+                        <Input type="password" placeholder="At least 8 characters, 1 uppercase, 1 number, 1 symbol" value={data.password} onChange={(e) => setData('password', e.target.value)}></Input>
                     </div>
                     <div className='gap-1.5'>
                         <Label htmlFor="confirm password">Confirm password</Label>
