@@ -108,6 +108,7 @@ export default function Index() {
                                 <TableHead>Birthdate</TableHead>
                                 <TableHead>Created At</TableHead>
                                 <TableHead>Updated At</TableHead>
+                                <TableHead>Action</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -124,6 +125,16 @@ export default function Index() {
                                     <TableCell>{formatDate(tenant.birthdate)}</TableCell>
                                     <TableCell>{formatDate(tenant.created_at, true)}</TableCell>
                                     <TableCell>{formatDate(tenant.updated_at, true)}</TableCell>
+                                    <TableCell>
+                                        <div className="flex space-x-2">
+                                            <Button className="bg-green-500 hover:bg-green-700">
+                                                Edit
+                                            </Button>
+                                            <Button className="bg-red-500 hover:bg-red-700">
+                                                Remove
+                                            </Button>
+                                        </div>
+                                    </TableCell>
                                 </TableRow>
                             )}
 
