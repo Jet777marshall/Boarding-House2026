@@ -42,6 +42,6 @@ class TenantController extends Controller
             'birthdate' => $request->birthdate,
         ]);
 
-        return redirect()->route('tenants.index')->with('success', 'Tenant registered successfully.');
+        return redirect()->route('tenants.index')->with('message', 'Tenant registered successfully.');
     }
 }
