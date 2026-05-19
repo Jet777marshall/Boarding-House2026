@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Hash;
 class TenantController extends Controller
 {
     Public function index(){
-        return Inertia::render('Tenants/Index', []);
+        $tenants = Tenant::all();
+        return Inertia::render('Tenants/Index', compact('tenants'));
     }
 
     public function create(){
