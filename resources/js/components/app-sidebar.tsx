@@ -6,6 +6,7 @@ import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid, UserPlus } from 'lucide-react';
 import AppLogo from './app-logo';
+import { Receipt } from "lucide-react";
 
 const mainNavItems: NavItem[] = [
     {
@@ -17,7 +18,12 @@ const mainNavItems: NavItem[] = [
     title: "Tenants",
     url: "/tenants",
     icon: UserPlus,
-  },
+    },
+    {  // Add this block
+    title: "Billings",
+    url: "/billings",
+    icon: Receipt,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
