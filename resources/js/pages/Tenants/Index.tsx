@@ -32,6 +32,7 @@ interface Tenant {
     personal_number: string;
     address: string;
     birthdate: string;
+    status: string;
     created_at: string;
     updated_at: string;
 }
@@ -106,6 +107,7 @@ export default function Index() {
                                 <TableHead>Personal Number</TableHead>
                                 <TableHead>Address</TableHead>
                                 <TableHead>Birthdate</TableHead>
+                                <TableHead>Status</TableHead>
                                 <TableHead>Created At</TableHead>
                                 <TableHead>Updated At</TableHead>
                                 <TableHead>Action</TableHead>
@@ -123,6 +125,18 @@ export default function Index() {
                                     <TableCell>{tenant.personal_number}</TableCell>
                                     <TableCell>{tenant.address}</TableCell>
                                     <TableCell>{formatDate(tenant.birthdate)}</TableCell>
+                                    <TableCell>
+                                        <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium
+                                             ${tenant.status === 'active'
+                                                ? 'bg-green-100 text-green-700'
+                                                : 'bg-red-100 text-red-700'
+                                            }`}>
+                                            <span className={`w-1.5 h-1.5 rounded-full 
+                                            ${tenant.status === 'active' ? 'bg-green-500' : 'bg-red-500'}`}              
+                                            />
+                                            {tenant.status}
+                                        </span>
+                                    </TableCell>
                                     <TableCell>{formatDate(tenant.created_at, true)}</TableCell>
                                     <TableCell>{formatDate(tenant.updated_at, true)}</TableCell>
                                     <TableCell>
