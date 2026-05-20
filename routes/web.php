@@ -14,7 +14,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tenants', [TenantController::class , 'index'])->name('tenants.index');
     Route::post('/tenants', [TenantController::class , 'store'])->name('tenants.store');
     Route::get('/tenants/create', [TenantController::class, 'create'])->name('tenants.create');
-    Route::get('/tenants/edit', [TenantController::class, 'create'])->name('tenants.edit');
+    Route::get('/tenants/{tenant}/edit', [TenantController::class, 'edit'])->name('tenants.edit');
+    Route::patch('/tenants/{tenant}', [TenantController::class, 'update'])->name('tenants.update');
     Route::patch('/tenants/{tenant}/removed', [TenantController::class, 'removed'])->name('tenants.removed');
 });
 

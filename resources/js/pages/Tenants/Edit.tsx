@@ -9,38 +9,50 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { CircleAlert } from 'lucide-react';
 
+interface Tenant {
+    id: number;
+    user_id: number;
+    full_name: string;
+    company_name: string;
+    emergency_contact_number: string;
+    email: string;
+    personal_number: string;
+    address: string;
+    birthdate: string;
+    status: string;
+    created_at: string;
+    updated_at: string;    
+}
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Register Tenant',
-        href: '/tenants/create',
-    },
-];
-export default function Index() {
+interface Props{
+    tenant: Tenant;
+}
+export default function Edit({tenant}: Props) {
 
-    const { data, setData, post, processing, errors } = useForm({
-        user_id: '',
-        full_name: '',
-        company_name: '',
-        emergency_contact_number: '',
-        email: '',
-        address: '',
-        birthdate: '',
+    const { data, setData, patch, processing, errors } = useForm({
+        user_id: tenant.user_id.toString(),
+        full_name: tenant.full_name,
+        company_name: tenant.company_name,
+        emergency_contact_number: tenant.emergency_contact_number,
+        email: tenant.email,
+        address: tenant.address,
+        birthdate: tenant.birthdate,
         password_confirmation: '',
-        personal_number: '',
+        personal_number: tenant.personal_number,
         password: '',
     })
 
-    const handlesubmit = (e: React.FormEvent) => {
+    const handleupdate = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('tenants.store'));
+        patch(route('tenants.update', tenant.id));
+       
     }
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <AppLayout breadcrumbs={[{title: 'Update tenant information', href: `/tenants/${tenant.id}/edit`}]}>
             <Head title="Tenants" />
             <div className='w-8/12 p-4'>
-                <form onSubmit={handlesubmit} className='space-y-4'>
+                <form onSubmit={handleupdate} className='space-y-4'>
 
                     {Object.keys(errors).length > 0 && (
                         <Alert variant="destructive">
@@ -101,7 +113,7 @@ export default function Index() {
                             onChange={(e) => setData('password_confirmation', e.target.value)} // ← Add this
                         />
                     </div>
-                    <Button type="submit">Register</Button>
+                    <Button type="submit">Update</Button>
                 </form>
             </div>
         </AppLayout>

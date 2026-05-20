@@ -46,10 +46,43 @@ class TenantController extends Controller
         return redirect()->route('tenants.index')->with('message', 'Tenant registered successfully.');
     }
 
-    public function edit(Tenant $tenant){
+    public function edit(Tenant $tenant)
+    {
         return Inertia::render('Tenants/Edit', compact('tenant'));
     }
 
+    public function update(Request $request, Tenant $tenant)
+    {
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'company_name' => 'nullable|string|max:255',
+            'emergency_contact_number' => 'nullable|string|max:20',
+            'email' => 'required|email|unique:tenants,email,' . $tenant->id, // ← Ignore current tenant's email
+            'personal_number' => 'nullable|string|max:20',
+            'password' => 'nullable|string|min:8|confirmed', // ← nullable so user can skip changing password
+            'address' => 'nullable|string|max:255',
+            'birthdate' => 'nullable|date',
+        ]);
+
+        $data = [
+            'full_name' => $request->full_name,
+            'company_name' => $request->company_name,
+            'emergency_contact_number' => $request->emergency_contact_number,
+            'email' => $request->email,
+            'personal_number' => $request->personal_number,
+            'address' => $request->address,
+            'birthdate' => $request->birthdate,
+        ];
+
+        // Only update password if a new one is provided
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $tenant->update($data);
+
+        return redirect()->route('tenants.index')->with('message', 'Tenant updated successfully.');
+    }
 
     public function removed(Tenant $tenant)
     {

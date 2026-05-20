@@ -140,7 +140,7 @@ export default function Index() {
                                                 : 'bg-red-100 text-red-700'
                                             }`}>
                                             <span className={`w-1.5 h-1.5 rounded-full 
-                                            ${tenant.status === 'active' ? 'bg-green-500' : 'bg-red-500'}`}              
+                                            ${tenant.status === 'active' ? 'bg-green-500' : 'bg-red-500'}`}
                                             />
                                             {tenant.status}
                                         </span>
@@ -149,9 +149,11 @@ export default function Index() {
                                     <TableCell>{formatDate(tenant.updated_at, true)}</TableCell>
                                     <TableCell>
                                         <div className="flex space-x-2">
-                                            <Button className="bg-green-500 hover:bg-green-700">
-                                                Edit
-                                            </Button>
+                                            <Link href={route('tenants.edit', tenant.id)}>
+                                                <Button className="bg-green-500 hover:bg-green-700">
+                                                    Edit
+                                                </Button>
+                                            </Link>
                                             <Button onClick={() => handleRemove(tenant.id, tenant.full_name)} className="bg-red-500 hover:bg-red-700">
                                                 Remove
                                             </Button>
