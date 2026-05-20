@@ -19,6 +19,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/tenants/{tenant}', [TenantController::class, 'update'])->name('tenants.update');
     Route::patch('/tenants/{tenant}/removed', [TenantController::class, 'removed'])->name('tenants.removed');
     Route::get('/billings', [BillingController::class, 'index'])->name('billings.index');
+    Route::get('/billings/create', [BillingController::class, 'create'])->name('billings.create');
 });
 
 require __DIR__.'/settings.php';
