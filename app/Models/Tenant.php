@@ -16,5 +16,6 @@ class Tenant extends Model
     'password',
     'address',
     'birthdate',
+    'status',
 ];
 }

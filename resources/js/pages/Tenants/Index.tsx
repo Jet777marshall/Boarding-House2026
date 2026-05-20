@@ -2,9 +2,10 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage, router } from '@inertiajs/react';
 import { InfoIcon, Terminal } from 'lucide-react';
 import { Megaphone } from 'lucide-react';
+
 import {
     Table,
     TableBody,
@@ -48,6 +49,13 @@ interface PageProps {
 
 export default function Index() {
     const { flash, tenants } = usePage().props as PageProps;
+
+
+    const handleRemove = (id: number, full_name: string) => {
+        if (confirm(`Are you sure you want to remove tenant ${full_name}?`)) {
+            router.patch(route('tenants.removed', { tenant: id }));
+        }
+    }
 
     // Add this helper function before your component
     const formatDate = (dateString: string, includeTime: boolean = false) => {
@@ -144,7 +152,7 @@ export default function Index() {
                                             <Button className="bg-green-500 hover:bg-green-700">
                                                 Edit
                                             </Button>
-                                            <Button className="bg-red-500 hover:bg-red-700">
+                                            <Button onClick={() => handleRemove(tenant.id, tenant.full_name)} className="bg-red-500 hover:bg-red-700">
                                                 Remove
                                             </Button>
                                         </div>

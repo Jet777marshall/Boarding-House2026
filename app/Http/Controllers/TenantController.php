@@ -45,4 +45,18 @@ class TenantController extends Controller
 
         return redirect()->route('tenants.index')->with('message', 'Tenant registered successfully.');
     }
+
+    public function edit(Tenant $tenant){
+        return Inertia::render('Tenants/Edit', compact('tenant'));
+    }
+
+
+    public function removed(Tenant $tenant)
+    {
+        $tenant->update([
+            'status' => 'removed'
+        ]);
+
+        return redirect()->route('tenants.index')->with('message', 'Tenant removed successfully.');
+    }
 }
