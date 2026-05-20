@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\BillingController;
 use App\Http\Controllers\TenantController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,6 +18,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tenants/{tenant}/edit', [TenantController::class, 'edit'])->name('tenants.edit');
     Route::patch('/tenants/{tenant}', [TenantController::class, 'update'])->name('tenants.update');
     Route::patch('/tenants/{tenant}/removed', [TenantController::class, 'removed'])->name('tenants.removed');
+    Route::get('/billings', [BillingController::class, 'index'])->name('billings.index');
 });
 
 require __DIR__.'/settings.php';
