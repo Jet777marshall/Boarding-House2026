@@ -20,6 +20,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Index() {
 
     const { data, setData, post, processing, errors } = useForm({
+        tenant_id: '',
         due_date: '',
         amount: '',
         description: '',
@@ -50,6 +51,7 @@ export default function Index() {
                             </AlertDescription>
                         </Alert>
                     )}
+
                     <div className='gap-1.5'>
                         <Label htmlFor="Due_date">Due Date</Label>
                         <Input
