@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm, } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { CircleAlert } from 'lucide-react';
@@ -18,9 +18,11 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index() {
+    const { props } = usePage();
+    const initialTenantId = (props as any).tenant_id ?? '';
 
     const { data, setData, post, processing, errors } = useForm({
-        tenant_id: '',
+        tenant_id: initialTenantId,
         due_date: '',
         amount: '',
         description: '',
@@ -51,6 +53,11 @@ export default function Index() {
                             </AlertDescription>
                         </Alert>
                     )}
+
+                    <div className='gap-1.5'>
+                        <Label htmlFor="tenant_id">Tenant ID</Label>
+                        <Input readOnly placeholder='Tenant ID' value={data.tenant_id} onChange={(e) => setData('tenant_id', e.target.value)}></Input>
+                    </div>
 
                     <div className='gap-1.5'>
                         <Label htmlFor="Due_date">Due Date</Label>

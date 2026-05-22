@@ -45,7 +45,7 @@ export default function Index({ tenants }: { tenants: any[] }) {
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{billing ? formatDate(billing.created_at) : '...'}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{billing ? formatDate(billing.updated_at) : '...'}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <Link href={route('billings.create')}>
+                                            <Link href={route('billings.create', { tenant_id: tenant.id })}>
                                                 <Button size="sm">Create Bill</Button>
                                             </Link>
                                         </td>

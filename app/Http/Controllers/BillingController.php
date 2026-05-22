@@ -16,17 +16,21 @@ class BillingController extends Controller
     }
 
     public function create(){
-        return Inertia::render('Billings/Create', []);
+        return Inertia::render('Billings/Create', [
+            'tenant_id' => request()->query('tenant_id'),
+        ]);
     }
 
     public function store(Request $request){
-        $request->validate([
+        $data = $request->validate([
+            'tenant_id' => 'required|exists:tenants,id',
             'due_date' => 'required|date',
             'amount' => 'required|numeric|min:0',
             'description' => 'nullable|string',
         ]);
 
-        Billing::create($request->all());
+        Billing::create($data);
+
         return redirect()->route('billings.index');
     }
 
