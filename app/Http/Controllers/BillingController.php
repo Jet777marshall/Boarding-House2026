@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Billing;
+use App\Models\Tenant;
 
 class BillingController extends Controller
 {
     public function index(){
-         return Inertia::render('Billings/Index', []);
+            $tenants = Tenant::with(['billings' => function($q){ $q->latest(); }])->get();
+            return Inertia::render('Billings/Index', [
+               'tenants' => $tenants,
+            ]);
     }
 
     public function create(){

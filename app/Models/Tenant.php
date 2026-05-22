@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Billing;
 
 class Tenant extends Model
 {
@@ -18,4 +19,9 @@ class Tenant extends Model
     'birthdate',
     'status',
 ];
+
+    public function billings()
+    {
+        return $this->hasMany(Billing::class);
+    }
 }
