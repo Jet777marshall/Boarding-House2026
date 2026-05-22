@@ -1,7 +1,11 @@
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage, router } from '@inertiajs/react';
+import { InfoIcon, Terminal } from 'lucide-react';
+import { Megaphone } from 'lucide-react';
+
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -10,11 +14,28 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+interface PageProps {
+    flash: {
+        message?: string;
+    };
+}
+
 export default function Index({ tenants }: { tenants: any[] }) {
+    const { flash } = usePage().props as PageProps;
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Billings" />
-
+             <div className='m-4'>
+                {flash.message && (
+                    <Alert>
+                        <Megaphone className="h-4 w-4" />
+                        <AlertTitle>Notification!</AlertTitle>
+                        <AlertDescription>
+                            {flash.message}
+                        </AlertDescription>
+                    </Alert>
+                )}
+            </div>
             <div className="p-4">
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">

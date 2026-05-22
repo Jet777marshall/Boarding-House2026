@@ -30,8 +30,7 @@ class BillingController extends Controller
         ]);
 
         Billing::create($data);
-
-        return redirect()->route('billings.index');
+        return redirect()->route('billings.index')->with('message', 'Billing created successfully.');
     }
 
 
