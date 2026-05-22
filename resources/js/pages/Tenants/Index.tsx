@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, usePage, router } from '@inertiajs/react';
-import { InfoIcon, Terminal } from 'lucide-react';
+import { InfoIcon, Terminal, Edit2, Trash2 } from 'lucide-react';
 import { Megaphone } from 'lucide-react';
 
 import {
@@ -148,13 +148,15 @@ export default function Index() {
                                     <TableCell>{formatDate(tenant.created_at, true)}</TableCell>
                                     <TableCell>{formatDate(tenant.updated_at, true)}</TableCell>
                                     <TableCell>
-                                        <div className="flex space-x-2">
+                                        <div className="flex gap-2">
                                             <Link href={route('tenants.edit', tenant.id)}>
-                                                <Button className="bg-green-500 hover:bg-green-700">
+                                                <Button size="sm" variant="outline" className="flex items-center gap-2">
+                                                    <Edit2 className="h-4 w-4" />
                                                     Edit
                                                 </Button>
                                             </Link>
-                                            <Button onClick={() => handleRemove(tenant.id, tenant.full_name)} className="bg-red-500 hover:bg-red-700">
+                                            <Button onClick={() => handleRemove(tenant.id, tenant.full_name)} size="sm" variant="destructive" className="flex items-center gap-2">
+                                                <Trash2 className="h-4 w-4" />
                                                 Remove
                                             </Button>
                                         </div>

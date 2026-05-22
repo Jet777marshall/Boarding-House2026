@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/billings', [BillingController::class, 'index'])->name('billings.index');
     Route::post('/billings', [BillingController::class, 'store'])->name('billings.store');
     Route::get('/billings/create', [BillingController::class, 'create'])->name('billings.create');
+    Route::patch('/billings/{billing}/removed', [BillingController::class, 'removed'])->name('billings.removed');
 });
 
 require __DIR__.'/settings.php';

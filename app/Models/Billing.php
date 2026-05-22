@@ -12,6 +12,7 @@ class Billing extends Model
         'amount',
         'due_date',
         'description',
+        'status',
     ];
 
     public function tenant()

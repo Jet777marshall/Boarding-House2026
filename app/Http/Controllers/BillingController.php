@@ -33,5 +33,14 @@ class BillingController extends Controller
         return redirect()->route('billings.index')->with('message', 'Billing created successfully.');
     }
 
+     public function removed(Billing $billing)
+    {
+        $billing->update([
+            'status' => 'removed'
+        ]);
+
+        return redirect()->route('billings.index')->with('message', 'Billing removed successfully.');
+    }
+
 
 }
