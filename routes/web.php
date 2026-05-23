@@ -25,6 +25,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/billings', [BillingController::class, 'index'])->name('billings.index');
     Route::post('/billings', [BillingController::class, 'store'])->name('billings.store');
     Route::get('/billings/create', [BillingController::class, 'create'])->name('billings.create');
+    Route::get('/billings/{billing}/edit', [BillingController::class, 'edit'])->name('billings.edit');
+    Route::patch('/billings/{billing}', [BillingController::class, 'update'])->name('billings.update');
     Route::patch('/billings/{billing}/removed', [BillingController::class, 'removed'])->name('billings.removed');
 });
 

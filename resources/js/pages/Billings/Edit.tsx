@@ -3,35 +3,38 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { CircleAlert } from 'lucide-react';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Edit Bill',
-        href: '/billings',
-    },
-];
+interface Billing {
+    id: number;
+    tenant_id: number;
+    due_date: string;
+    amount: string;
+    description: string;
 
-export default function Edit() {
-    const { props } = usePage();
-    const billing = (props as any).billing ?? {};
+}
+
+interface Props {
+    billing: Billing;
+}
+
+export default function Edit({ billing }: Props) {
 
     const { data, setData, patch, processing, errors } = useForm({
-        due_date: billing.due_date || '',
-        amount: billing.amount || '',
-        description: billing.description || '',
+        due_date: billing.due_date,
+        amount: billing.amount,
+        description: billing.description,
     });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         patch(route('billings.update', billing.id));
-    }
+    };
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <AppLayout breadcrumbs={[{ title: 'Edit Bill', href: `/billings/${billing.id}/edit` }]}>
             <Head title="Edit Bill" />
             <div className='w-8/12 p-4'>
                 <form onSubmit={handleSubmit} className='space-y-4'>
@@ -51,9 +54,10 @@ export default function Edit() {
                     )}
 
                     <div className='gap-1.5'>
-                        <Label htmlFor="tenant_id">Tenant</Label>
-                        <Input readOnly placeholder='Tenant' value={billing.tenant?.full_name || ''} onChange={() => {}}></Input>
+                        <Label>Tenant ID</Label>
+                        <Input readOnly value={billing.tenant_id} />
                     </div>
+
 
                     <div className='gap-1.5'>
                         <Label htmlFor="due_date">Due Date</Label>
@@ -67,12 +71,20 @@ export default function Edit() {
 
                     <div className='gap-1.5'>
                         <Label htmlFor="amount">Amount</Label>
-                        <Input placeholder='Amount' value={data.amount} onChange={(e) => setData('amount', e.target.value)}></Input>
+                        <Input
+                            placeholder='Amount'
+                            value={data.amount}
+                            onChange={(e) => setData('amount', e.target.value)}
+                        />
                     </div>
 
                     <div className='gap-1.5'>
                         <Label htmlFor="description">Description</Label>
-                        <Textarea placeholder='Description' value={data.description} onChange={(e) => setData('description', e.target.value)}></Textarea>
+                        <Textarea
+                            placeholder='Description'
+                            value={data.description}
+                            onChange={(e) => setData('description', e.target.value)}
+                        />
                     </div>
 
                     <Button type="submit" disabled={processing}>Update Bill</Button>

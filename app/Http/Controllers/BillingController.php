@@ -33,7 +33,7 @@ class BillingController extends Controller
         return redirect()->route('billings.index')->with('message', 'Billing created successfully.');
     }
 
-     public function removed(Billing $billing)
+    public function removed(Billing $billing)
     {
         $billing->update([
             'status' => 'removed'
@@ -41,6 +41,25 @@ class BillingController extends Controller
 
         return redirect()->route('billings.index')->with('message', 'Billing removed successfully.');
     }
+
+    public function update(Request $request, Billing $billing)
+    {
+        $data = $request->validate([
+            'due_date' => 'required|date',
+            'amount' => 'required|numeric|min:0',
+            'description' => 'nullable|string',
+        ]);
+
+        $billing->update($data);
+        return redirect()->route('billings.index')->with('message', 'Billing updated successfully.');
+    }
+
+    public function edit(Billing $billing)
+    {
+       return Inertia::render('Billings/Edit', compact('billing'));
+    }
+
+
 
 
 }

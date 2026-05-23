@@ -20,7 +20,7 @@ interface PageProps {
     };
 }
 
-export default function Index({ tenants }: { tenants: any[] }) {
+export default function Edit({ tenants }: { tenants: any[] }) {
     const { flash } = usePage().props as PageProps;
 
     const handleRemove = (id: number, full_name: string) => {
@@ -31,7 +31,7 @@ export default function Index({ tenants }: { tenants: any[] }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Billings" />
-             <div className='m-4'>
+            <div className='m-4'>
                 {flash.message && (
                     <Alert>
                         <Megaphone className="h-4 w-4" />
@@ -91,13 +91,16 @@ export default function Index({ tenants }: { tenants: any[] }) {
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {billing ? (
                                                 <div className="flex gap-2">
-                                                    <Button size="sm" variant="outline" className="flex items-center gap-2">
-                                                        <Edit2 className="h-4 w-4" />
-                                                        Edit
-                                                    </Button>
-                                                    <Button 
+                                                    <Link href={route('billings.edit', { billing: billing.id })}>
+                                                        <Button size="sm" variant="outline" className="flex items-center gap-2">
+                                                            <Edit2 className="h-4 w-4" />
+                                                            Edit
+                                                        </Button>
+                                                    </Link>
+
+                                                    <Button
                                                         onClick={() => handleRemove(billing.id, tenant.full_name)}
-                                                        size="sm" 
+                                                        size="sm"
                                                         variant="destructive"
                                                         className="flex items-center gap-2"
                                                     >
