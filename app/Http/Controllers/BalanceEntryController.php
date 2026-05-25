@@ -9,14 +9,13 @@ use App\Models\BalanceEntry;
 
 class BalanceEntryController extends Controller
 {
-    public function index(){
-        $tenants = Tenant::with(['balanceEntries'])->get();
+   public function index(){
+    $tenants = Tenant::with(['balanceEntries' => function($q){ $q->latest(); }])->get();
 
-        return Inertia::render('Balance_Entries/Index', [
-            'tenants' => $tenants,
-        ]);
-    }
-
+    return Inertia::render('Balance_Entries/Index', [
+        'tenants' => $tenants,
+    ]);
+}
     public function create(Request $request){
         $tenant_id = $request->query('tenant_id');
         return Inertia::render('Balance_Entries/Create', [
