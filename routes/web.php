@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\BalanceEntryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -28,6 +29,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/billings/{billing}/edit', [BillingController::class, 'edit'])->name('billings.edit');
     Route::patch('/billings/{billing}', [BillingController::class, 'update'])->name('billings.update');
     Route::patch('/billings/{billing}/removed', [BillingController::class, 'removed'])->name('billings.removed');
+
+    //balance entry routes
+    Route::get('/balance_entries', [BalanceEntryController::class, 'index'])->name('balance_entries.index');
+    Route::post('/balance_entries', [BalanceEntryController::class, 'store'])->name('balance_entries.store');
+    Route::get('/balance_entries/create', [BalanceEntryController::class, 'create'])->name('balance_entries.create');
+    Route::get('/balance_entries/{balance_entry}/edit', [BalanceEntryController::class, 'edit'])->name('balance_entries.edit');
+    Route::patch('/balance_entries/{balance_entry}', [BalanceEntryController::class, 'update'])->name('balance_entries.update');
+    Route::patch('/balance_entries/{balance_entry}/removed', [BalanceEntryController::class, 'removed'])->name('balance_entries.removed');
+
 });
 
 require __DIR__.'/settings.php';
