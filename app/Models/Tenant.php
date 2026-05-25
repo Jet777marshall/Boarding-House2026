@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Billing;
+use App\Models\BalanceEntry;
 
 class Tenant extends Model
 {
@@ -23,5 +24,10 @@ class Tenant extends Model
     public function billings()
     {
         return $this->hasMany(Billing::class);
+    }
+
+    public function balanceEntries()
+    {
+        return $this->hasMany(BalanceEntry::class);
     }
 }
