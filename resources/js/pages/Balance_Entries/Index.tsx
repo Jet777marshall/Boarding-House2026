@@ -16,31 +16,31 @@ interface PageProps {
     flash: {
         message?: string;
     };
-    tenants: Array<{
+    balanceEntries: Array<{
         id: number;
-        full_name: string;
-        balanceEntries: Array<{
+        tenant_id: number;
+        amount: number;
+        description?: string;
+        created_at?: string;
+        updated_at?: string;
+        tenant?: {
             id: number;
-            tenant_id: number;
-            amount: number;
-            description?: string;
-            created_at?: string;
-            updated_at?: string;
-        }>;
+            full_name: string;
+        };
     }>;
 }
 
 export default function BalanceEntries() {
-    const { tenants, flash } = usePage().props as PageProps;
+    const { balanceEntries, flash } = usePage().props as PageProps;
 
     const formatValue = (value: number | string | null | undefined) =>
         value !== null && value !== undefined && value !== '' ? value : '...';
 
-    const formatDate = (d: string | null | undefined) => 
+    const formatDate = (d: string | null | undefined) =>
         d ? new Date(d).toLocaleDateString() : '...';
 
     const handleRemove = (id: number, tenantName: string) => {
-        if (confirm(`Are you sure you want to remove balance entry for ${tenantName}?`)) {
+        if (confirm(`Are you sure you want to remove this balance entry for ${tenantName}?`)) {
             router.patch(route('balance_entries.removed', { balance_entry: id }));
         }
     };
@@ -75,47 +75,37 @@ export default function BalanceEntries() {
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                            {tenants.map((tenant) => {
-                                const balance = tenant.balanceEntries && tenant.balanceEntries.length > 0 ? tenant.balanceEntries[0] : null;
+                            {balanceEntries.map((entry) => (
+                                <tr key={entry.id}>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{formatValue(entry.id)}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{formatValue(entry.tenant_id)}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{formatValue(entry.tenant?.full_name)}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{formatValue(entry.amount)}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{formatValue(entry.description)}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{formatDate(entry.created_at)}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{formatDate(entry.updated_at)}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <div className="flex gap-2">
+                                            <Link href={route('balance_entries.edit', { balance_entry: entry.id })}>
+                                                <Button size="sm" variant="outline" className="flex items-center gap-2">
+                                                    <Edit2 className="h-4 w-4" />
+                                                    Edit
+                                                </Button>
+                                            </Link>
 
-                                return (
-                                    <tr key={tenant.id}>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{balance?.id ?? '...'}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{formatValue(tenant.id)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{formatValue(tenant.full_name)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{balance ? formatValue(balance.amount) : '...'}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{balance ? formatValue(balance.description) : '...'}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{balance ? formatDate(balance.created_at) : '...'}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{balance ? formatDate(balance.updated_at) : '...'}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {balance ? (
-                                                <div className="flex gap-2">
-                                                    <Link href={route('balance_entries.edit', { balance_entry: balance.id })}>
-                                                        <Button size="sm" variant="outline" className="flex items-center gap-2">
-                                                            <Edit2 className="h-4 w-4" />
-                                                            Edit
-                                                        </Button>
-                                                    </Link>
-
-                                                    <Button
-                                                        onClick={() => handleRemove(balance.id, tenant.full_name)}
-                                                        size="sm"
-                                                        variant="destructive"
-                                                        className="flex items-center gap-2"
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                        Remove
-                                                    </Button>
-                                                </div>
-                                            ) : (
-                                                <Link href={route('balance_entries.create', { tenant_id: tenant.id })}>
-                                                    <Button size="sm">Add balance</Button>
-                                                </Link>
-                                            )}
-                                        </td>
-                                    </tr>
-                                );
-                            })}
+                                            <Button
+                                                onClick={() => handleRemove(entry.id, entry.tenant?.full_name || 'Unknown')}
+                                                size="sm"
+                                                variant="destructive"
+                                                className="flex items-center gap-2"
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                                Remove
+                                            </Button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
