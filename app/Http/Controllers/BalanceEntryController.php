@@ -9,13 +9,17 @@ use App\Models\BalanceEntry;
 
 class BalanceEntryController extends Controller
 {
-   public function index(){
-    $balanceEntries = BalanceEntry::with('tenant')->latest()->get();
-
-    return Inertia::render('Balance_Entries/Index', [
-        'balanceEntries' => $balanceEntries,
-    ]);
-}
+    public function index(){
+        // Load all tenants with their balance entries (latest first)
+        $tenants = Tenant::with(['balanceEntries' => function($q) { 
+            $q->latest(); 
+        }])->get();
+        
+        return Inertia::render('Balance_Entries/Index', [
+            'tenants' => $tenants,
+        ]);
+    }
+    
     public function create(Request $request){
         $tenant_id = $request->query('tenant_id');
         return Inertia::render('Balance_Entries/Create', [
@@ -64,5 +68,4 @@ class BalanceEntryController extends Controller
 
         return redirect()->route('balance_entries.index')->with('message', 'Balance entry removed successfully.');
     }
-
 }
