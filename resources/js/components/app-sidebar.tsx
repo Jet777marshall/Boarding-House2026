@@ -6,7 +6,7 @@ import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid, UserPlus } from 'lucide-react';
 import AppLogo from './app-logo';
-import { Receipt,  NotebookPen } from "lucide-react";
+import { Receipt,  NotebookPen, CreditCard } from "lucide-react";
 
 
 const mainNavItems: NavItem[] = [
@@ -29,6 +29,11 @@ const mainNavItems: NavItem[] = [
     title: "Balance Entry",
     url: "/balance_entries",
     icon: NotebookPen,
+    },
+    {  // Add this block
+    title: "Payments",
+    url: "/payments",
+    icon: CreditCard,
     },
 ];
 
