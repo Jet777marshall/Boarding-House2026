@@ -145,9 +145,7 @@
                             </select>
                         </div>
 
-                        <Button type="submit" disabled={processing}>
-                            {processing ? 'Submitting...' : 'Submit Payment'}
-                        </Button>
+                       <Button type="submit">Create Bill</Button>
 
                     </form>
                 </div>
