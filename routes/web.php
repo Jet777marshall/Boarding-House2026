@@ -2,6 +2,7 @@
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\BalanceEntryController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -40,12 +41,12 @@ Route::middleware(['auth'])->group(function () {
 
 
     //payment routes
-    Route::get('/payments', [BalanceEntryController::class, 'payments'])->name('payments.index');
-    Route::post('/payments', [BalanceEntryController::class, 'storePayment'])->name('payments.store');
-    Route::get('/payments/create', [BalanceEntryController::class, 'createPayment'])->name('payments.create');
-    Route::get('/payments/{payment}/edit', [BalanceEntryController::class, 'editPayment'])->name('payments.edit');
-    Route::patch('/payments/{payment}', [BalanceEntryController::class, 'updatePayment'])->name('payments.update');
-    Route::patch('/payments/{payment}/removed', [BalanceEntryController::class, 'removedPayment'])->name('payments.removed');
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
+    Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
+    Route::get('/payments/{payment}/edit', [PaymentController::class, 'edit'])->name('payments.edit');
+    Route::patch('/payments/{payment}', [PaymentController::class, 'update'])->name('payments.update');
+    Route::patch('/payments/{payment}/removed', [PaymentController::class, 'removed'])->name('payments.removed');
 });
 
 require __DIR__.'/settings.php';
