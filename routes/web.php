@@ -38,6 +38,14 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/balance_entries/{balance_entry}', [BalanceEntryController::class, 'update'])->name('balance_entries.update');
     Route::patch('/balance_entries/{balance_entry}/removed', [BalanceEntryController::class, 'removed'])->name('balance_entries.removed');
 
+
+    //payment routes
+    Route::get('/payments', [BalanceEntryController::class, 'payments'])->name('payments.index');
+    Route::post('/payments', [BalanceEntryController::class, 'storePayment'])->name('payments.store');
+    Route::get('/payments/create', [BalanceEntryController::class, 'createPayment'])->name('payments.create');
+    Route::get('/payments/{payment}/edit', [BalanceEntryController::class, 'editPayment'])->name('payments.edit');
+    Route::patch('/payments/{payment}', [BalanceEntryController::class, 'updatePayment'])->name('payments.update');
+    Route::patch('/payments/{payment}/removed', [BalanceEntryController::class, 'removedPayment'])->name('payments.removed');
 });
 
 require __DIR__.'/settings.php';
