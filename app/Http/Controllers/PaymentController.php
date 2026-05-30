@@ -11,4 +11,9 @@ class PaymentController extends Controller
     {
         return Inertia::render('Payments/Index',[]);
     }
+
+    public function create()
+    {
+        return Inertia::render('Payments/Create',[]);
+    }
 }
