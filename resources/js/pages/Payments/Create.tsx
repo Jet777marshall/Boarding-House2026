@@ -10,7 +10,8 @@ import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Create Payment', href: '/payments/create' },
+    { title: 'Create Payment',
+     href: '/payments/create' },
 ];
 
 interface Tenant {
@@ -28,7 +29,7 @@ export default function Index({ tenants }: Props) {
         full_name: '',
         tenant_id: '',
         billing_id: '',
-        payment_date: '',
+        amount: '',
         payment_method: '',
         reference_number: '',
         verified_by: '',
@@ -54,7 +55,6 @@ export default function Index({ tenants }: Props) {
         setOpen(false);
     };
 
-    // Close dropdown on outside click
     useEffect(() => {
         const handler = (e: MouseEvent) => {
             if (comboRef.current && !comboRef.current.contains(e.target as Node)) {
@@ -103,7 +103,6 @@ export default function Index({ tenants }: Props) {
                                     onChange={(e) => {
                                         setSearch(e.target.value);
                                         setOpen(true);
-                                        // Clear dependent fields if user edits manually
                                         setData((prev) => ({
                                             ...prev,
                                             full_name: '',
@@ -173,13 +172,17 @@ export default function Index({ tenants }: Props) {
                         />
                     </div>
 
+                    {/* Amount */}
                     <div className="gap-1.5">
-                        <Label htmlFor="payment_date">Payment Date</Label>
+                        <Label htmlFor="amount">Amount</Label>
                         <Input
-                            id="payment_date"
-                            type="date"
-                            value={data.payment_date}
-                            onChange={(e) => setData('payment_date', e.target.value)}
+                            id="amount"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter payment amount"
+                            value={data.amount}
+                            onChange={(e) => setData('amount', e.target.value)}
                         />
                     </div>
 

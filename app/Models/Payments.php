@@ -11,7 +11,7 @@ class Payments extends Model
       protected $fillable = [
         'tenant_id',
         'billing_id',
-        'payment_date',
+        'amount',
         'payment_method',
         'reference_number',
         'verified_by',
