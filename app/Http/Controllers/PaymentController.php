@@ -43,6 +43,7 @@ class PaymentController extends Controller
             'reference_number' => 'nullable|string|max:255',
             'verified_by'      => 'nullable|string|max:255',
             'status'           => 'nullable|string|max:255',
+            'payment_date' => 'nullable|date_format:Y-m-d H:i:s',
             'payment_method'   => 'nullable|string',
         ]);
 

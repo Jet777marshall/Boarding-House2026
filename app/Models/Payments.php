@@ -16,6 +16,7 @@ class Payments extends Model
         'reference_number',
         'verified_by',
         'status',
+        'payment_date',
     
     ];
 

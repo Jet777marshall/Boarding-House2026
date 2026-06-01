@@ -10,8 +10,7 @@ import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Create Payment',
-     href: '/payments/create' },
+    { title: 'Create Payment', href: '/payments/create' },
 ];
 
 interface Tenant {
@@ -34,6 +33,7 @@ export default function Index({ tenants }: Props) {
         reference_number: '',
         verified_by: '',
         status: '',
+        payment_date: '', // ← add this
     });
 
     const [search, setSearch] = useState('');
@@ -197,6 +197,7 @@ export default function Index({ tenants }: Props) {
                             <option value="">Select payment method</option>
                             <option value="cash">Cash</option>
                             <option value="gcash">GCash</option>
+                            <option value="maya">Maya</option>
                             <option value="bank_transfer">Bank Transfer</option>
                             <option value="check">Check</option>
                         </select>
@@ -231,10 +232,26 @@ export default function Index({ tenants }: Props) {
                             className="border-input bg-background flex h-9 w-full rounded-md border px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                         >
                             <option value="">Select status</option>
-                            <option value="pending">Pending</option>
-                            <option value="verified">Verified</option>
+                            <option value="pending">Partial</option>
+                            <option value="verified">Full Payment</option>
                             <option value="rejected">Rejected</option>
                         </select>
+                    </div>
+
+                    {/* Payment Date */}
+                    <div className="gap-1.5">
+                        <Label htmlFor="payment_date">Payment Date</Label>
+                        <Input
+                            id="payment_date"
+                            type="datetime-local"
+                            value={data.payment_date}
+                            onChange={(e) => {
+                                const val = e.target.value; // "2026-06-01T09:45"
+                                const formatted = val ? val.replace('T', ' ') + ':00' : '';
+                                // converts to "2026-06-01 09:45:00" ← matches Y-m-d H:i:s
+                                setData('payment_date', formatted);
+                            }}
+                        />
                     </div>
 
                     <Button type="submit" disabled={processing}>
