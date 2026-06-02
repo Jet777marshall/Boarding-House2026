@@ -11,7 +11,28 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Payments/Index',[]);
+        $payments = \App\Models\Payments::with('tenant')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($payment) {
+                return [
+                    'id'               => $payment->id,
+                    'tenant_id'        => $payment->tenant_id,
+                    'full_name'        => $payment->tenant?->full_name ?? 'N/A',
+                    'billing_id'       => $payment->billing_id,
+                    'amount'           => $payment->amount,
+                    'payment_method'   => $payment->payment_method,
+                    'reference_number' => $payment->reference_number,
+                    'verified_by'      => $payment->verified_by,
+                    'status'           => $payment->status,
+                    'payment_date'     => $payment->payment_date,
+                    'created_at'       => $payment->created_at,
+                ];
+            });
+
+        return Inertia::render('Payments/Index', [
+            'payments' => $payments,
+        ]);
     }
 
    public function create()
