@@ -2,8 +2,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/react';
-import { Megaphone } from 'lucide-react';
+import { Head, Link, usePage, router } from '@inertiajs/react';
+import { Megaphone, Edit2, Trash2 } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Payments', href: '/payments' },
@@ -30,15 +30,21 @@ interface PageProps {
 
 const statusColor = (status: string) => {
     switch (status?.toLowerCase()) {
-        case 'paid':     return 'bg-green-100 text-green-700';
-        case 'pending':  return 'bg-yellow-100 text-yellow-700';
-        case 'overdue':  return 'bg-red-100 text-red-700';
-        default:         return 'bg-gray-100 text-gray-600';
+        case 'paid':    return 'bg-green-100 text-green-700';
+        case 'pending': return 'bg-yellow-100 text-yellow-700';
+        case 'overdue': return 'bg-red-100 text-red-700';
+        default:        return 'bg-gray-100 text-gray-600';
     }
 };
 
 export default function Index() {
     const { flash, payments } = usePage().props as PageProps;
+
+    const handleRemove = (id: number, full_name: string) => {
+        if (confirm(`Are you sure you want to remove the payment for ${full_name}?`)) {
+            router.patch(route('payments.removed', { payment: id }));
+        }
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -74,6 +80,7 @@ export default function Index() {
                                     'Verified By',
                                     'Status',
                                     'Payment Date',
+                                    'Action',
                                 ].map((col) => (
                                     <th
                                         key={col}
@@ -88,7 +95,7 @@ export default function Index() {
                             {payments.length === 0 ? (
                                 <tr>
                                     <td
-                                        colSpan={9}
+                                        colSpan={10}
                                         className="px-4 py-8 text-center text-gray-400"
                                     >
                                         No payment records found.
@@ -112,10 +119,8 @@ export default function Index() {
                                         <td className="px-4 py-3 text-gray-600 capitalize">
                                             {payment.payment_method ?? '—'}
                                         </td>
-                                        <td className="px-4 py-3 text-gray-500 font-mono text-xs">
-                                            {payment.reference_number
-                                                ? `${payment.reference_number.slice(0, 8)}…`
-                                                : '—'}
+                                        <td className="px-4 py-3 text-gray-600 font-mono text-xs">
+                                            {payment.reference_number ?? '—'}
                                         </td>
                                         <td className="px-4 py-3 text-gray-600">
                                             {payment.verified_by ?? '—'}
@@ -131,6 +136,25 @@ export default function Index() {
                                                     year: 'numeric', month: 'short', day: 'numeric',
                                                 })
                                                 : '—'}
+                                        </td>
+                                        <td className="px-4 py-3">
+                                            <div className="flex gap-2">
+                                                <Link href={route('payments.edit', { payment: payment.id })}>
+                                                    <Button size="sm" variant="outline" className="flex items-center gap-2">
+                                                        <Edit2 className="h-4 w-4" />
+                                                        Edit
+                                                    </Button>
+                                                </Link>
+                                                <Button
+                                                    onClick={() => handleRemove(payment.id, payment.full_name)}
+                                                    size="sm"
+                                                    variant="destructive"
+                                                    className="flex items-center gap-2"
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                    Remove
+                                                </Button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))

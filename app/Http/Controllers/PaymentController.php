@@ -77,4 +77,47 @@ class PaymentController extends Controller
         return redirect()->route('payments.index')->with('message', 'Payment recorded successfully.');
     }
 
+    public function removed($id)
+    {
+        $payment = Payments::findOrFail($id);
+        $payment->update([
+            'status' => 'removed'
+        ]);
+
+        return redirect()->route('payments.index')->with('message', 'Payment removed successfully.');
+    }
+
+    public function edit(Payments $payment)
+    {
+        return Inertia::render('Payments/Edit', [
+            'payment' => [
+                'id'               => $payment->id,
+                'tenant_id'        => $payment->tenant_id,
+                'billing_id'       => $payment->billing_id,
+                'full_name'        => $payment->tenant?->full_name ?? 'N/A',
+                'amount'           => $payment->amount,
+                'payment_method'   => $payment->payment_method ?? '',
+                'reference_number' => $payment->reference_number ?? '',
+                'verified_by'      => $payment->verified_by ?? '',
+                'status'           => $payment->status ?? '',
+                'payment_date'     => $payment->payment_date ?? '',
+            ],
+        ]);
+    }
+
+    public function update(Request $request, Payments $payment)
+    {
+        $data = $request->validate([
+            'amount'           => 'required|numeric|min:0',
+            'payment_method'   => 'nullable|string',
+            'reference_number' => 'nullable|string|max:255',
+            'verified_by'      => 'nullable|string|max:255',
+            'status'           => 'nullable|string|max:255',
+            'payment_date'     => 'nullable|date_format:Y-m-d H:i:s',
+        ]);
+
+        $payment->update($data);
+        return redirect()->route('payments.index')->with('message', 'Payment updated successfully.');
+    }
+
 }
