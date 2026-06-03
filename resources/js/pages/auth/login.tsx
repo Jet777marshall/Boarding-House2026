@@ -42,8 +42,11 @@ export default function Login({ status, canResetPassword }: LoginProps) {
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
+                        <Label htmlFor="email" className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-slate-600 dark:text-slate-400">
+                            Email address
+                        </Label>
                         <Input
+                            className="bg-slate-50 text-slate-950 border-slate-200 placeholder:text-slate-400 focus:border-black focus:ring-black/10 dark:bg-[#111111] dark:border-white/10 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-white"
                             id="email"
                             type="email"
                             required
@@ -59,14 +62,17 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                     <div className="grid gap-2">
                         <div className="flex items-center">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password" className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-slate-600 dark:text-slate-400">
+                                Password
+                            </Label>
                             {canResetPassword && (
-                                <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
+                                <TextLink href={route('password.request')} className="ml-auto text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white" tabIndex={5}>
                                     Forgot password?
                                 </TextLink>
                             )}
                         </div>
                         <Input
+                            className="bg-slate-50 text-slate-950 border-slate-200 placeholder:text-slate-400 focus:border-black focus:ring-black/10 dark:bg-[#111111] dark:border-white/10 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-white"
                             id="password"
                             type="password"
                             required
@@ -81,18 +87,20 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                     <div className="flex items-center space-x-3">
                         <Checkbox id="remember" name="remember" tabIndex={3} />
-                        <Label htmlFor="remember">Remember me</Label>
+                        <Label htmlFor="remember" className="text-sm text-slate-700 dark:text-slate-300">
+                            Remember me
+                        </Label>
                     </div>
 
-                    <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
+                    <Button type="submit" className="mt-4 w-full" size="lg" tabIndex={4} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Log in
                     </Button>
                 </div>
 
-                <div className="text-muted-foreground text-center text-sm">
+                <div className="text-center text-sm text-slate-500 dark:text-slate-400">
                     Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
+                    <TextLink href={route('register')} className="font-semibold text-slate-900 hover:text-black dark:text-slate-100 dark:hover:text-white" tabIndex={5}>
                         Sign up
                     </TextLink>
                 </div>
