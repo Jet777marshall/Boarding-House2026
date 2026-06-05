@@ -21,10 +21,12 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
     const { auth } = usePage<SharedData>().props;
+    const subject = auth.tenant ?? auth.user;
+    const isTenant = Boolean(auth.tenant);
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: auth.user.name,
-        email: auth.user.email,
+        name: 'full_name' in subject ? subject.full_name : subject.name,
+        email: subject.email,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -75,7 +77,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             <InputError className="mt-2" message={errors.email} />
                         </div>
 
-                        {mustVerifyEmail && auth.user.email_verified_at === null && (
+                        {mustVerifyEmail && !isTenant && auth.user.email_verified_at === null && (
                             <div>
                                 <p className="mt-2 text-sm text-neutral-800">
                                     Your email address is unverified.
@@ -113,7 +115,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                     </form>
                 </div>
 
-                <DeleteUser />
+                {!isTenant && <DeleteUser />}
             </SettingsLayout>
         </AppLayout>
     );

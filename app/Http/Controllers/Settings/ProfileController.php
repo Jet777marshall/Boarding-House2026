@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
+use App\Models\Tenant;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class ProfileController extends Controller
     public function edit(Request $request): Response
     {
         return Inertia::render('settings/profile', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'mustVerifyEmail' => ! $request->session()->has('tenant_id') && $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
         ]);
     }
@@ -29,6 +30,20 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        if ($request->session()->has('tenant_id')) {
+            $tenant = Tenant::find($request->session()->get('tenant_id'));
+
+            if ($tenant) {
+                $tenant->fill([
+                    'full_name' => $request->validated()['name'],
+                    'email' => $request->validated()['email'],
+                ]);
+                $tenant->save();
+            }
+
+            return to_route('profile.edit');
+        }
+
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
@@ -45,6 +60,10 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        if ($request->session()->has('tenant_id')) {
+            abort(403);
+        }
+
         $request->validate([
             'password' => ['required', 'current_password'],
         ]);
