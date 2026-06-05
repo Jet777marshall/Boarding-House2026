@@ -1,7 +1,18 @@
 import { LucideIcon } from 'lucide-react';
 
+export interface Tenant {
+    id: number;
+    full_name: string;
+    email: string;
+    company_name?: string;
+    [key: string]: unknown;
+}
+
+export type AuthSubject = User | Tenant;
+
 export interface Auth {
     user: User;
+    tenant?: Tenant;
 }
 
 export interface BreadcrumbItem {

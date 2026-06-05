@@ -2,38 +2,38 @@ import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
+import { type NavItem, type SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid, UserPlus } from 'lucide-react';
 import AppLogo from './app-logo';
-import { Receipt,  NotebookPen, CreditCard } from "lucide-react";
+import { Receipt, NotebookPen, CreditCard } from 'lucide-react';
 
 
-const mainNavItems: NavItem[] = [
+const allNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         url: '/dashboard',
         icon: LayoutGrid,
     },
-    {  // Add this block
-    title: "Tenants",
-    url: "/tenants",
-    icon: UserPlus,
+    {
+        title: 'Tenants',
+        url: '/tenants',
+        icon: UserPlus,
     },
-    {  // Add this block
-    title: "Billings",
-    url: "/billings",
-    icon: Receipt,
+    {
+        title: 'Billings',
+        url: '/billings',
+        icon: Receipt,
     },
-    {  // Add this block
-    title: "Balance Entry",
-    url: "/balance_entries",
-    icon: NotebookPen,
+    {
+        title: 'Balance Entry',
+        url: '/balance_entries',
+        icon: NotebookPen,
     },
-    {  // Add this block
-    title: "Payments",
-    url: "/payments",
-    icon: CreditCard,
+    {
+        title: 'Payments',
+        url: '/payments',
+        icon: CreditCard,
     },
 ];
 
@@ -51,6 +51,10 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+    const page = usePage<SharedData>();
+    const tenant = page.props.auth?.tenant;
+    const mainNavItems = tenant ? allNavItems.filter((item) => item.url === '/dashboard') : allNavItems;
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>

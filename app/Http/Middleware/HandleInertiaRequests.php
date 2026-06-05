@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Tenant;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -38,16 +39,29 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
-        return array_merge(parent::share($request), [
-            ...parent::share($request),
+        $shared = array_merge(parent::share($request), [
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user(),
             ],
-               'flash' => [
+            'flash' => [
                 'message' => fn () => $request->session()->get('message'),
-            ]
+            ],
         ]);
+
+        if ($request->session()->has('tenant_id')) {
+            $tenant = Tenant::find($request->session()->get('tenant_id'));
+            if ($tenant) {
+                $shared['auth']['tenant'] = [
+                    'id' => $tenant->id,
+                    'full_name' => $tenant->full_name,
+                    'email' => $tenant->email,
+                    'company_name' => $tenant->company_name,
+                ];
+            }
+        }
+
+        return $shared;
     }
 }

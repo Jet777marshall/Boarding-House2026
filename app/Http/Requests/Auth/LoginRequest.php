@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Tenant;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -41,15 +43,30 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
+        if (Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            $this->session()->forget('tenant_id');
+            RateLimiter::clear($this->throttleKey());
+            return;
         }
 
-        RateLimiter::clear($this->throttleKey());
+        $tenant = Tenant::where('email', $this->string('email'))->first();
+
+        if (
+            $tenant &&
+            Hash::check($this->string('password'), $tenant->password) &&
+            $tenant->user_id &&
+            Auth::loginUsingId($tenant->user_id, $this->boolean('remember'))
+        ) {
+            $this->session()->put('tenant_id', $tenant->id);
+            RateLimiter::clear($this->throttleKey());
+            return;
+        }
+
+        RateLimiter::hit($this->throttleKey());
+
+        throw ValidationException::withMessages([
+            'email' => __('auth.failed'),
+        ]);
     }
 
     /**
