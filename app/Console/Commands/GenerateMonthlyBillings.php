@@ -19,44 +19,63 @@ class GenerateMonthlyBillings extends Command
         $today = Carbon::today();
 
         Tenant::where('status', '!=', 'removed')->each(function ($tenant) use ($today) {
+            $billingDay = optional($tenant->user)->billing_day;
 
-            // ✅ Use the FIRST billing as the anchor day
-            $firstBilling = Billing::where('tenant_id', $tenant->id)
-                ->where('status', '!=', 'removed')
-                ->oldest('due_date')
-                ->first();
+            if (is_null($billingDay)) {
+                $firstBilling = Billing::where('tenant_id', $tenant->id)
+                    ->where('status', '!=', 'removed')
+                    ->oldest('due_date')
+                    ->first();
 
-            if (!$firstBilling) return;
+                if (!$firstBilling) {
+                    return;
+                }
 
-            $billingDay = Carbon::parse($firstBilling->due_date)->day;
+                $billingDay = Carbon::parse($firstBilling->due_date)->day;
+            }
 
-            if ($today->day !== $billingDay) return;
+            if ($today->day !== (int) $billingDay) {
+                return;
+            }
+
+            $dueDate = Carbon::create($today->year, $today->month, min((int) $billingDay, $today->daysInMonth))->startOfDay();
 
             $exists = Billing::where('tenant_id', $tenant->id)
-                ->whereYear('due_date', $today->year)
-                ->whereMonth('due_date', $today->month)
+                ->whereYear('due_date', $dueDate->year)
+                ->whereMonth('due_date', $dueDate->month)
                 ->where('status', '!=', 'removed')
                 ->exists();
 
-            if ($exists) return;
+            if ($exists) {
+                return;
+            }
 
-            // ✅ Use last billing's amount in case it was updated
-            $lastBilling = Billing::where('tenant_id', $tenant->id)
-                ->where('status', '!=', 'removed')
-                ->latest('due_date')
-                ->first();
+            $billingAmount = optional($tenant->user)->billing_amount;
+
+            if (is_null($billingAmount)) {
+                $lastBilling = Billing::where('tenant_id', $tenant->id)
+                    ->where('status', '!=', 'removed')
+                    ->latest('due_date')
+                    ->first();
+
+                if (!$lastBilling) {
+                    return;
+                }
+
+                $billingAmount = $lastBilling->amount;
+            }
 
             Billing::create([
                 'tenant_id'   => $tenant->id,
-                'amount'      => $lastBilling->amount,
-                'due_date'    => $today->toDateString(),
-                'description' => 'Monthly billing — ' . $today->format('F Y'),
+                'amount'      => $billingAmount,
+                'due_date'    => $dueDate->toDateString(),
+                'description' => 'Monthly billing — ' . $dueDate->format('F Y'),
                 'status'      => 'pending',
             ]);
 
             $this->recalculateBalance($tenant->id);
 
-            $this->info("Billed: {$tenant->full_name} — ₱{$lastBilling->amount}");
+            $this->info("Billed: {$tenant->full_name} — ₱{$billingAmount}");
         });
 
         $this->info('Done!');
