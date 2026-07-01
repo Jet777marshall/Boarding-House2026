@@ -5,6 +5,7 @@ export interface Tenant {
     full_name: string;
     email: string;
     company_name?: string;
+    total_balance?: number;
     [key: string]: unknown;
 }
 

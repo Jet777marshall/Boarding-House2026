@@ -13,7 +13,9 @@ export default function Dashboard() {
     const page = usePage<SharedData>();
     const user = page.props.auth?.user;
     const tenant = page.props.auth?.tenant;
+    const isTenantView = Boolean(tenant?.id);
     const greetingName = tenant?.full_name?.split(' ')[0] ?? user?.name ?? 'Guest';
+    const totalBalance = tenant?.total_balance ?? 0;
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -33,6 +35,12 @@ export default function Dashboard() {
                         <p className="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">{tenant?.full_name ?? user?.name ?? 'Unknown'}</p>
                         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{tenant?.email ?? user?.email ?? 'No email available'}</p>
                     </div>
+                    {isTenantView && (
+                        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                            <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Total Balance</p>
+                            <p className="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">₱{totalBalance.toLocaleString()}</p>
+                        </div>
+                    )}
                     <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
                         <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Account Status</p>
                         <p className="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">Active</p>

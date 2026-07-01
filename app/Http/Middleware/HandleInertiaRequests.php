@@ -58,6 +58,7 @@ class HandleInertiaRequests extends Middleware
                     'full_name' => $tenant->full_name,
                     'email' => $tenant->email,
                     'company_name' => $tenant->company_name,
+                    'total_balance' => optional($tenant->tenantBalance)->total_balance ?? 0,
                 ];
             }
         }

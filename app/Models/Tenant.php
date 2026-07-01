@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Billing;
 use App\Models\BalanceEntry;
+use App\Models\Tenant_balances;
 use App\Models\User;
 
 class Tenant extends Model
@@ -35,5 +36,10 @@ class Tenant extends Model
     public function balanceEntries()
     {
         return $this->hasMany(BalanceEntry::class);
+    }
+
+    public function tenantBalance()
+    {
+        return $this->hasOne(Tenant_balances::class, 'tenant_id');
     }
 }
