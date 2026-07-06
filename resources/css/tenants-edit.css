@@ -1,0 +1,861 @@
+/* ========================================================
+   Tenant Edit Page - The Dorm Hub
+   ======================================================== */
+
+/* ------------------------------
+   Page Container
+   ------------------------------ */
+.tenant-edit-page {
+    padding: 1.5rem;
+    max-width: 100%;
+}
+
+/* ------------------------------
+   Header
+   ------------------------------ */
+.tenant-edit-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .tenant-edit-header {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.tenant-edit-header-left {
+    display: flex;
+    align-items: center;
+}
+
+.tenant-edit-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.tenant-edit-brand-icon {
+    display: flex;
+    height: 3rem;
+    width: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #1c1917, #44403c);
+    color: #ffffff;
+}
+
+.tenant-edit-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1c1917;
+}
+
+.tenant-edit-subtitle {
+    font-size: 0.875rem;
+    color: #78716c;
+}
+
+.tenant-edit-header-right {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.tenant-edit-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #374151;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.tenant-edit-back-btn:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+    transform: translateX(-2px);
+}
+
+/* ------------------------------
+   Status Banner
+   ------------------------------ */
+.tenant-edit-status-banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.75rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+}
+
+.tenant-edit-status-info {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.tenant-edit-status-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+}
+
+.tenant-edit-status-value {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1c1917;
+}
+
+.tenant-edit-status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.tenant-edit-status-active {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.tenant-edit-status-inactive {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* ------------------------------
+   Form Card
+   ------------------------------ */
+.tenant-edit-card {
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 640px) {
+    .tenant-edit-card {
+        padding: 2rem;
+    }
+}
+
+/* ------------------------------
+   Alert
+   ------------------------------ */
+.tenant-edit-alert {
+    margin-bottom: 1.5rem;
+    border-radius: 0.75rem;
+    border-left: 4px solid #dc2626;
+}
+
+/* ------------------------------
+   Form
+   ------------------------------ */
+.tenant-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* ------------------------------
+   Form Sections
+   ------------------------------ */
+.tenant-edit-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tenant-edit-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.tenant-edit-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1c1917;
+}
+
+/* ------------------------------
+   Form Grid
+   ------------------------------ */
+.tenant-edit-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .tenant-edit-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.tenant-edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.tenant-edit-field-full {
+    grid-column: 1 / -1;
+}
+
+/* ------------------------------
+   Form Labels
+   ------------------------------ */
+.tenant-edit-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #374151;
+}
+
+/* ------------------------------
+   Form Inputs
+   ------------------------------ */
+.tenant-edit-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    padding-left: 2.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #1c1917;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.tenant-edit-input:focus {
+    border-color: #d97706;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+}
+
+.tenant-edit-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.tenant-edit-input::placeholder {
+    color: #9ca3af;
+}
+
+.tenant-edit-field-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1rem;
+    width: 1rem;
+    color: #9ca3af;
+    pointer-events: none;
+}
+
+.tenant-edit-textarea-icon {
+    top: 0.75rem;
+    transform: none;
+}
+
+.tenant-edit-textarea {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    padding-left: 2.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #1c1917;
+    font-size: 0.875rem;
+    resize: vertical;
+    min-height: 80px;
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.tenant-edit-textarea:focus {
+    border-color: #d97706;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+}
+
+.tenant-edit-textarea::placeholder {
+    color: #9ca3af;
+}
+
+.tenant-edit-field .relative {
+    position: relative;
+}
+
+/* ------------------------------
+   Password Toggle
+   ------------------------------ */
+.tenant-edit-password-toggle {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    transition: color 0.2s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.375rem;
+}
+
+.tenant-edit-password-toggle:hover {
+    color: #374151;
+    background: #f3f4f6;
+}
+
+/* ------------------------------
+   Password Strength
+   ------------------------------ */
+.tenant-edit-password-strength {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.tenant-edit-password-bar {
+    flex: 1;
+    height: 0.25rem;
+    border-radius: 9999px;
+    background: #e5e7eb;
+    overflow: hidden;
+}
+
+.tenant-edit-password-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+}
+
+.tenant-edit-password-text {
+    font-size: 0.75rem;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
+/* ------------------------------
+   Error Messages
+   ------------------------------ */
+.tenant-edit-error {
+    font-size: 0.75rem;
+    color: #dc2626;
+    margin-top: 0.25rem;
+}
+
+/* ------------------------------
+   Form Actions
+   ------------------------------ */
+.tenant-edit-actions {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+@media (min-width: 640px) {
+    .tenant-edit-actions {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+}
+
+.tenant-edit-cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #374151;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.tenant-edit-cancel:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+    transform: translateY(-1px);
+}
+
+.tenant-edit-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 2rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #1c1917, #44403c);
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.tenant-edit-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(28, 25, 23, 0.2);
+}
+
+.tenant-edit-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.tenant-edit-spinner {
+    display: inline-block;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 9999px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #ffffff;
+    animation: tenantEditSpin 0.8s linear infinite;
+}
+
+@keyframes tenantEditSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ------------------------------
+   Dark Mode Support
+   ------------------------------ */
+@media (prefers-color-scheme: dark) {
+    .tenant-edit-title {
+        color: #ffffff;
+    }
+
+    .tenant-edit-subtitle {
+        color: #a8a29e;
+    }
+
+    .tenant-edit-status-banner {
+        background: #1f2937;
+        border-color: #374151;
+    }
+
+    .tenant-edit-status-value {
+        color: #ffffff;
+    }
+
+    .tenant-edit-status-label {
+        color: #9ca3af;
+    }
+
+    .tenant-edit-status-active {
+        background: rgba(16, 185, 129, 0.2);
+        color: #34d399;
+    }
+
+    .tenant-edit-status-inactive {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+    }
+
+    .tenant-edit-card {
+        background: #1f2937;
+        border-color: #374151;
+    }
+
+    .tenant-edit-section-header {
+        border-color: #374151;
+    }
+
+    .tenant-edit-section-title {
+        color: #ffffff;
+    }
+
+    .tenant-edit-label {
+        color: #9ca3af;
+    }
+
+    .tenant-edit-input,
+    .tenant-edit-textarea {
+        background: #111827;
+        border-color: #374151;
+        color: #ffffff;
+    }
+
+    .tenant-edit-input:focus,
+    .tenant-edit-textarea:focus {
+        border-color: #fbbf24;
+        box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+    }
+
+    .tenant-edit-input::placeholder,
+    .tenant-edit-textarea::placeholder {
+        color: #6b7280;
+    }
+
+    .tenant-edit-field-icon {
+        color: #6b7280;
+    }
+
+    .tenant-edit-password-toggle {
+        color: #6b7280;
+    }
+
+    .tenant-edit-password-toggle:hover {
+        color: #9ca3af;
+        background: #374151;
+    }
+
+    .tenant-edit-password-text {
+        color: #9ca3af;
+    }
+
+    .tenant-edit-password-bar {
+        background: #374151;
+    }
+
+    .tenant-edit-error {
+        color: #f87171;
+    }
+
+    .tenant-edit-actions {
+        border-color: #374151;
+    }
+
+    .tenant-edit-cancel {
+        color: #9ca3af;
+        background: #1f2937;
+        border-color: #374151;
+    }
+
+    .tenant-edit-cancel:hover {
+        background: #374151;
+        border-color: #4b5563;
+    }
+
+    .tenant-edit-back-btn {
+        color: #9ca3af;
+        background: #1f2937;
+        border-color: #374151;
+    }
+
+    .tenant-edit-back-btn:hover {
+        background: #374151;
+        border-color: #4b5563;
+    }
+
+    .tenant-edit-submit {
+        background: linear-gradient(135deg, #ffffff, #e5e7eb);
+        color: #1c1917;
+    }
+
+    .tenant-edit-submit:hover:not(:disabled) {
+        background: linear-gradient(135deg, #f3f4f6, #d1d5db);
+        box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.1);
+    }
+
+    .tenant-edit-spinner {
+        border-color: rgba(0, 0, 0, 0.2);
+        border-top-color: #1c1917;
+    }
+
+    .tenant-edit-alert {
+        background: rgba(220, 38, 38, 0.1);
+        border-color: rgba(220, 38, 38, 0.3);
+    }
+}
+
+/* ------------------------------
+   Responsive Adjustments
+   ------------------------------ */
+@media (max-width: 640px) {
+    .tenant-edit-page {
+        padding: 0.75rem;
+    }
+
+    .tenant-edit-card {
+        padding: 1rem;
+    }
+
+    .tenant-edit-brand-icon {
+        height: 2.5rem;
+        width: 2.5rem;
+    }
+
+    .tenant-edit-title {
+        font-size: 1.25rem;
+    }
+
+    .tenant-edit-status-banner {
+        gap: 0.75rem;
+        padding: 0.5rem 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .tenant-edit-actions {
+        flex-direction: column;
+    }
+
+    .tenant-edit-cancel,
+    .tenant-edit-submit {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .tenant-edit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tenant-edit-field-full {
+        grid-column: 1;
+    }
+
+    .tenant-edit-section-title {
+        font-size: 0.875rem;
+    }
+
+    .tenant-edit-section-title span {
+        display: block;
+        margin-left: 0;
+        margin-top: 0.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tenant-edit-page {
+        padding: 0.5rem;
+    }
+
+    .tenant-edit-card {
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+    }
+
+    .tenant-edit-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tenant-edit-header-right {
+        width: 100%;
+    }
+
+    .tenant-edit-back-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .tenant-edit-brand {
+        gap: 0.5rem;
+    }
+
+    .tenant-edit-brand-icon {
+        height: 2rem;
+        width: 2rem;
+    }
+
+    .tenant-edit-title {
+        font-size: 1rem;
+    }
+
+    .tenant-edit-subtitle {
+        font-size: 0.75rem;
+    }
+
+    .tenant-edit-input,
+    .tenant-edit-textarea {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.625rem;
+        padding-left: 2rem;
+    }
+
+    .tenant-edit-field-icon {
+        left: 0.5rem;
+        height: 0.875rem;
+        width: 0.875rem;
+    }
+
+    .tenant-edit-label {
+        font-size: 0.625rem;
+    }
+
+    .tenant-edit-password-toggle {
+        right: 0.5rem;
+    }
+
+    .tenant-edit-password-strength {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.25rem;
+    }
+
+    .tenant-edit-password-text {
+        font-size: 0.625rem;
+    }
+
+    .tenant-edit-status-banner {
+        gap: 0.5rem;
+        padding: 0.375rem 0.75rem;
+    }
+
+    .tenant-edit-status-label {
+        font-size: 0.625rem;
+    }
+
+    .tenant-edit-status-value {
+        font-size: 0.75rem;
+    }
+
+    .tenant-edit-status-badge {
+        font-size: 0.625rem;
+        padding: 0.0625rem 0.5rem;
+    }
+}
+
+/* ------------------------------
+   Focus States for Accessibility
+   ------------------------------ */
+.tenant-edit-input:focus-visible,
+.tenant-edit-textarea:focus-visible,
+.tenant-edit-password-toggle:focus-visible,
+.tenant-edit-submit:focus-visible,
+.tenant-edit-cancel:focus-visible,
+.tenant-edit-back-btn:focus-visible {
+    outline: 2px solid #d97706;
+    outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .tenant-edit-input:focus-visible,
+    .tenant-edit-textarea:focus-visible,
+    .tenant-edit-password-toggle:focus-visible,
+    .tenant-edit-submit:focus-visible,
+    .tenant-edit-cancel:focus-visible,
+    .tenant-edit-back-btn:focus-visible {
+        outline-color: #fbbf24;
+    }
+}
+
+/* ------------------------------
+   Reduced Motion
+   ------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ------------------------------
+   Scrollbar Styling
+   ------------------------------ */
+.tenant-edit-textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tenant-edit-textarea::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 3px;
+}
+
+.tenant-edit-textarea::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+}
+
+.tenant-edit-textarea::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+@media (prefers-color-scheme: dark) {
+    .tenant-edit-textarea::-webkit-scrollbar-track {
+        background: #374151;
+    }
+
+    .tenant-edit-textarea::-webkit-scrollbar-thumb {
+        background: #4b5563;
+    }
+
+    .tenant-edit-textarea::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+    }
+}
+
+/* ------------------------------
+   Loading Shimmer Effect
+   ------------------------------ */
+.tenant-edit-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.tenant-edit-loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
+    );
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .tenant-edit-loading::after {
+        background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.05) 50%,
+            transparent 100%
+        );
+    }
+}

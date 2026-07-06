@@ -1,9 +1,29 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, usePage, router } from '@inertiajs/react';
-import { Edit2, Trash2, Megaphone } from 'lucide-react';
+import { 
+    Edit2, 
+    Trash2, 
+    Megaphone, 
+    Search, 
+    UserPlus, 
+    Users,
+    Building2,
+    Calendar,
+    Mail,
+    Phone,
+    MapPin,
+    User,
+    ChevronDown,
+    Filter,
+    Download,
+    MoreVertical
+} from 'lucide-react';
+import { useState } from 'react';
+import '../../../css/tenants.css';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -48,14 +68,17 @@ const formatDate = (dateString: string, includeTime: boolean = false) => {
 
 const statusColor = (status: string) => {
     switch (status?.toLowerCase()) {
-        case 'active':   return { badge: 'bg-green-100 text-green-700', dot: 'bg-green-500' };
-        case 'inactive': return { badge: 'bg-red-100 text-red-700',     dot: 'bg-red-500'   };
+        case 'active':   return { badge: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-500' };
+        case 'inactive': return { badge: 'bg-amber-100 text-amber-700',     dot: 'bg-amber-500'   };
         default:         return { badge: 'bg-gray-100 text-gray-600',   dot: 'bg-gray-400'  };
     }
 };
 
 export default function Index() {
     const { flash, tenants } = usePage().props as PageProps;
+    const [searchTerm, setSearchTerm] = useState('');
+    const [statusFilter, setStatusFilter] = useState('all');
+    const [showFilters, setShowFilters] = useState(false);
 
     const handleRemove = (id: number, full_name: string) => {
         if (confirm(`Are you sure you want to remove tenant ${full_name}?`)) {
@@ -63,129 +86,284 @@ export default function Index() {
         }
     };
 
+    // Filter tenants
+    const filteredTenants = tenants.filter(tenant => {
+        const matchesSearch = tenant.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                             tenant.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                             tenant.company_name?.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        const matchesStatus = statusFilter === 'all' || tenant.status?.toLowerCase() === statusFilter.toLowerCase();
+        
+        return matchesSearch && matchesStatus;
+    });
+
+    const stats = {
+        total: tenants.length,
+        active: tenants.filter(t => t.status?.toLowerCase() === 'active').length,
+        inactive: tenants.filter(t => t.status?.toLowerCase() === 'inactive').length,
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Tenants" />
+            <Head title="Tenants - The Dorm Hub" />
 
-            <div className="m-4 space-y-4">
+            <div className="tenants-page">
+                {/* Flash Message */}
                 {flash.message && (
-                    <Alert>
-                        <Megaphone className="h-4 w-4" />
+                    <Alert className="tenants-alert">
+                        <Megaphone className="tenants-alert-icon" />
                         <AlertTitle>Notification!</AlertTitle>
                         <AlertDescription>{flash.message}</AlertDescription>
                     </Alert>
                 )}
 
-                <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold">Tenant Records</h2>
-                    <Link href={route('tenants.create')}>
-                        <Button>Register Tenant</Button>
-                    </Link>
+                {/* Header Section */}
+                <div className="tenants-header">
+                    <div className="tenants-header-left">
+                        <div className="tenants-brand">
+                            <div className="tenants-brand-icon">
+                                <Users className="h-6 w-6" />
+                            </div>
+                            <div>
+                                <h1 className="tenants-title">Tenant Management</h1>
+                                <p className="tenants-subtitle">Manage all your boarding house tenants</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="tenants-header-right">
+                        <Button className="tenants-add-btn">
+                            <UserPlus className="h-4 w-4" />
+                            <Link href={route('tenants.create')} className="text-white hover:text-white">
+                                Register Tenant
+                            </Link>
+                        </Button>
+                    </div>
                 </div>
 
-                <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
-                    <table className="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                {[
-                                    'ID',
-                                    'User ID',
-                                    'Full Name',
-                                    'Company Name',
-                                    'Emergency Contact',
-                                    'Email',
-                                    'Personal Number',
-                                    'Address',
-                                    'Birthdate',
-                                    'Status',
-                                    'Created At',
-                                    'Updated At',
-                                    'Action',
-                                ].map((col) => (
-                                    <th
-                                        key={col}
-                                        className="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wide whitespace-nowrap"
-                                    >
-                                        {col}
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100 bg-white">
-                            {tenants.length === 0 ? (
+                {/* Stats Cards */}
+                <div className="tenants-stats">
+                    <div className="tenants-stat-card">
+                        <div className="tenants-stat-icon tenants-stat-total">
+                            <Users className="h-5 w-5" />
+                        </div>
+                        <div>
+                            <p className="tenants-stat-label">Total Tenants</p>
+                            <p className="tenants-stat-value">{stats.total}</p>
+                        </div>
+                    </div>
+                    <div className="tenants-stat-card">
+                        <div className="tenants-stat-icon tenants-stat-active">
+                            <User className="h-5 w-5" />
+                        </div>
+                        <div>
+                            <p className="tenants-stat-label">Active</p>
+                            <p className="tenants-stat-value text-emerald-600">{stats.active}</p>
+                        </div>
+                    </div>
+                    <div className="tenants-stat-card">
+                        <div className="tenants-stat-icon tenants-stat-inactive">
+                            <User className="h-5 w-5" />
+                        </div>
+                        <div>
+                            <p className="tenants-stat-label">Inactive</p>
+                            <p className="tenants-stat-value text-amber-600">{stats.inactive}</p>
+                        </div>
+                    </div>
+                    <div className="tenants-stat-card">
+                        <div className="tenants-stat-icon tenants-stat-building">
+                            <Building2 className="h-5 w-5" />
+                        </div>
+                        <div>
+                            <p className="tenants-stat-label">Rooms Occupied</p>
+                            <p className="tenants-stat-value">{stats.active}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Search and Filters */}
+                <div className="tenants-toolbar">
+                    <div className="tenants-search-wrapper">
+                        <Search className="tenants-search-icon" />
+                        <Input
+                            type="text"
+                            placeholder="Search tenants by name, email, or company..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="tenants-search-input"
+                        />
+                    </div>
+                    <div className="tenants-toolbar-actions">
+                        <button
+                            onClick={() => setShowFilters(!showFilters)}
+                            className="tenants-filter-btn"
+                        >
+                            <Filter className="h-4 w-4" />
+                            Filters
+                            <ChevronDown className={`h-4 w-4 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
+                        </button>
+                        <button className="tenants-export-btn">
+                            <Download className="h-4 w-4" />
+                            Export
+                        </button>
+                    </div>
+                </div>
+
+                {/* Filters Panel */}
+                {showFilters && (
+                    <div className="tenants-filters-panel">
+                        <div className="tenants-filter-group">
+                            <label className="tenants-filter-label">Status</label>
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => setStatusFilter(e.target.value)}
+                                className="tenants-filter-select"
+                            >
+                                <option value="all">All Statuses</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div className="tenants-filter-group">
+                            <label className="tenants-filter-label">Sort By</label>
+                            <select className="tenants-filter-select">
+                                <option value="newest">Newest First</option>
+                                <option value="oldest">Oldest First</option>
+                                <option value="name">Name A-Z</option>
+                            </select>
+                        </div>
+                    </div>
+                )}
+
+                {/* Table */}
+                <div className="tenants-table-wrapper">
+                    <div className="tenants-table-container">
+                        <table className="tenants-table">
+                            <thead>
                                 <tr>
-                                    <td
-                                        colSpan={13}
-                                        className="px-4 py-8 text-center text-gray-400"
-                                    >
-                                        No tenant records found.
-                                    </td>
+                                    <th className="tenants-table-header">ID</th>
+                                    <th className="tenants-table-header">Tenant</th>
+                                    <th className="tenants-table-header">Contact</th>
+                                    <th className="tenants-table-header">Company</th>
+                                    <th className="tenants-table-header">Status</th>
+                                    <th className="tenants-table-header">Joined</th>
+                                    <th className="tenants-table-header text-right">Actions</th>
                                 </tr>
-                            ) : (
-                                tenants.map((tenant) => {
-                                    const colors = statusColor(tenant.status);
-                                    return (
-                                        <tr key={tenant.id} className="hover:bg-gray-50 transition-colors">
-                                            <td className="px-4 py-3 text-gray-600">{tenant.id}</td>
-                                            <td className="px-4 py-3 text-gray-600">{tenant.user_id}</td>
-                                            <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
-                                                {tenant.full_name}
-                                            </td>
-                                            <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
-                                                {tenant.company_name || '—'}
-                                            </td>
-                                            <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
-                                                {tenant.emergency_contact_number || '—'}
-                                            </td>
-                                            <td className="px-4 py-3 text-gray-600">
-                                                {tenant.email || '—'}
-                                            </td>
-                                            <td className="px-4 py-3 text-gray-600">
-                                                {tenant.personal_number || '—'}
-                                            </td>
-                                            <td className="px-4 py-3 text-gray-600 max-w-[200px] truncate">
-                                                {tenant.address || '—'}
-                                            </td>
-                                            <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
-                                                {formatDate(tenant.birthdate)}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${colors.badge}`}>
-                                                    <span className={`w-1.5 h-1.5 rounded-full ${colors.dot}`} />
-                                                    {tenant.status}
-                                                </span>
-                                            </td>
-                                            <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
-                                                {formatDate(tenant.created_at, true)}
-                                            </td>
-                                            <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
-                                                {formatDate(tenant.updated_at, true)}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <div className="flex gap-2">
-                                                    <Link href={route('tenants.edit', tenant.id)}>
-                                                        <Button size="sm" variant="outline" className="flex items-center gap-2">
-                                                            <Edit2 className="h-4 w-4" />
-                                                            Edit
+                            </thead>
+                            <tbody>
+                                {filteredTenants.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={7} className="tenants-empty-state">
+                                            <div className="tenants-empty-content">
+                                                <Users className="h-12 w-12 text-gray-300" />
+                                                <p className="tenants-empty-text">No tenants found</p>
+                                                <p className="tenants-empty-subtext">
+                                                    {searchTerm ? 'Try adjusting your search or filters' : 'Start by registering your first tenant'}
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    filteredTenants.map((tenant) => {
+                                        const colors = statusColor(tenant.status);
+                                        return (
+                                            <tr key={tenant.id} className="tenants-table-row">
+                                                <td className="tenants-table-cell">
+                                                    <span className="tenants-id-badge">#{tenant.id}</span>
+                                                </td>
+                                                <td className="tenants-table-cell">
+                                                    <div className="tenants-tenant-info">
+                                                        <div className="tenants-avatar">
+                                                            {tenant.full_name.charAt(0).toUpperCase()}
+                                                        </div>
+                                                        <div>
+                                                            <p className="tenants-tenant-name">{tenant.full_name}</p>
+                                                            <p className="tenants-tenant-email">
+                                                                <Mail className="h-3 w-3" />
+                                                                {tenant.email || 'No email'}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="tenants-table-cell">
+                                                    <div className="tenants-contact-info">
+                                                        <p className="tenants-phone">
+                                                            <Phone className="h-3 w-3" />
+                                                            {tenant.personal_number || '—'}
+                                                        </p>
+                                                        <p className="tenants-address">
+                                                            <MapPin className="h-3 w-3" />
+                                                            {tenant.address ? 
+                                                                tenant.address.length > 30 ? 
+                                                                    tenant.address.substring(0, 30) + '...' : 
+                                                                    tenant.address 
+                                                                : '—'}
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td className="tenants-table-cell">
+                                                    <div className="tenants-company">
+                                                        <Building2 className="h-3 w-3" />
+                                                        <span>{tenant.company_name || '—'}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="tenants-table-cell">
+                                                    <span className={`tenants-status-badge ${colors.badge}`}>
+                                                        <span className={`tenants-status-dot ${colors.dot}`} />
+                                                        {tenant.status || 'Unknown'}
+                                                    </span>
+                                                </td>
+                                                <td className="tenants-table-cell">
+                                                    <div className="tenants-date">
+                                                        <Calendar className="h-3 w-3" />
+                                                        <span>{formatDate(tenant.created_at)}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="tenants-table-cell text-right">
+                                                    <div className="tenants-actions">
+                                                        <Link href={route('tenants.edit', tenant.id)}>
+                                                            <Button 
+                                                                size="sm" 
+                                                                variant="outline" 
+                                                                className="tenants-action-btn tenants-action-edit"
+                                                            >
+                                                                <Edit2 className="h-3.5 w-3.5" />
+                                                                Edit
+                                                            </Button>
+                                                        </Link>
+                                                        <Button
+                                                            onClick={() => handleRemove(tenant.id, tenant.full_name)}
+                                                            size="sm"
+                                                            variant="destructive"
+                                                            className="tenants-action-btn tenants-action-remove"
+                                                        >
+                                                            <Trash2 className="h-3.5 w-3.5" />
+                                                            Remove
                                                         </Button>
-                                                    </Link>
-                                                    <Button
-                                                        onClick={() => handleRemove(tenant.id, tenant.full_name)}
-                                                        size="sm"
-                                                        variant="destructive"
-                                                        className="flex items-center gap-2"
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                        Remove
-                                                    </Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })
-                            )}
-                        </tbody>
-                    </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {/* Table Footer */}
+                    <div className="tenants-table-footer">
+                        <p className="tenants-table-footer-text">
+                            Showing <span className="font-semibold">{filteredTenants.length}</span> of{' '}
+                            <span className="font-semibold">{tenants.length}</span> tenants
+                        </p>
+                        <div className="tenants-table-footer-actions">
+                            <Button variant="outline" size="sm" disabled>
+                                Previous
+                            </Button>
+                            <Button variant="outline" size="sm">
+                                Next
+                            </Button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </AppLayout>
