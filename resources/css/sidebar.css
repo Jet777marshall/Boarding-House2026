@@ -1,0 +1,576 @@
+/* ========================================================
+   App Sidebar - The Dorm Hub Premium Theme
+   Matches Login & Register Page Styling
+   ======================================================== */
+
+/* ── Sidebar Theme Override ── */
+.sidebar-theme {
+    --sidebar-background: #f7efe8;
+    --sidebar-foreground: #1c1917;
+    --sidebar-primary: #d97706;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #e5d5c8;
+    --sidebar-accent-foreground: #1c1917;
+    --sidebar-border: rgba(214, 211, 209, 0.5);
+    --sidebar-ring: #d97706;
+    background: var(--sidebar-background) !important;
+    border-right: 1px solid var(--sidebar-border) !important;
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+    transition: width 0.3s ease, min-width 0.3s ease, max-width 0.3s ease !important;
+}
+
+/* ── Collapsed Sidebar ── */
+[data-sidebar="collapsed"] .sidebar-theme {
+    width: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+}
+
+/* ── Sidebar Header ── */
+.sidebar-header {
+    padding: 0.75rem 0.75rem 0.5rem;
+    border-bottom: 1px solid rgba(214, 211, 209, 0.5);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    background: linear-gradient(135deg, #fffbeb 0%, #f7efe8 100%);
+}
+
+.sidebar-brand-btn {
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 0.75rem !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    display: flex !important;
+    align-items: center !important;
+    height: auto !important;
+    min-height: 56px !important;
+}
+
+.sidebar-brand-btn:hover {
+    background: rgba(217, 119, 6, 0.08) !important;
+}
+
+/* ── App Logo Styles ── */
+.app-logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 0.25rem 0;
+    width: 100%;
+}
+
+.app-logo-icon {
+    display: flex;
+    height: 2.75rem;
+    width: 2.75rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #1c1917, #44403c);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(28, 25, 23, 0.15);
+}
+
+.sidebar-brand-btn:hover .app-logo-icon {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(28, 25, 23, 0.2);
+}
+
+.app-logo-initials {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.app-logo-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.1;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.app-logo-text {
+    font-family: 'Fraunces', serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #1c1917;
+    letter-spacing: -0.025em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.app-logo-tagline {
+    font-size: 0.4375rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #d97706;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+/* ── Collapsed Logo ── */
+[data-sidebar="collapsed"] .app-logo-text-wrapper {
+    display: none !important;
+}
+
+[data-sidebar="collapsed"] .app-logo {
+    gap: 0;
+    padding: 0;
+    justify-content: center;
+}
+
+[data-sidebar="collapsed"] .app-logo-icon {
+    height: 2.25rem;
+    width: 2.25rem;
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+}
+
+[data-sidebar="collapsed"] .sidebar-brand-btn {
+    justify-content: center !important;
+    min-height: 48px !important;
+    padding: 0.25rem !important;
+}
+
+/* ── Role Badge ── */
+.sidebar-role-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    margin: 0.25rem 0.5rem 0.25rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    background: rgba(217, 119, 6, 0.1);
+    border: 1px solid rgba(217, 119, 6, 0.2);
+    flex-shrink: 0;
+    width: calc(100% - 1rem);
+    min-height: 28px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-role-badge-icon {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.sidebar-role-badge-text {
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #d97706;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Collapsed Role Badge ── */
+[data-sidebar="collapsed"] .sidebar-role-badge-text {
+    display: none !important;
+}
+
+[data-sidebar="collapsed"] .sidebar-role-badge {
+    justify-content: center;
+    padding: 0.25rem;
+    margin: 0.25rem 0.25rem;
+    width: auto;
+    min-height: 24px;
+    min-width: 24px;
+    border-radius: 9999px;
+    background: rgba(217, 119, 6, 0.15);
+}
+
+[data-sidebar="collapsed"] .sidebar-role-badge-icon {
+    font-size: 0.875rem;
+}
+
+/* ── Sidebar Content ── */
+.sidebar-content {
+    padding: 0.5rem 0.75rem;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* ── Sidebar Footer ── */
+.sidebar-footer {
+    padding: 0.5rem 0.75rem 0.75rem;
+    border-top: 1px solid rgba(214, 211, 209, 0.5);
+    flex-shrink: 0;
+}
+
+/* ── Nav Main Overrides ── */
+.sidebar-content [data-sidebar="menu"] {
+    gap: 0.25rem;
+}
+
+.sidebar-content [data-sidebar="menu-item"] {
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    color: #57534e;
+}
+
+.sidebar-content [data-sidebar="menu-item"]:hover {
+    background: rgba(217, 119, 6, 0.08);
+    color: #1c1917;
+}
+
+.sidebar-content [data-sidebar="menu-item"][data-active="true"] {
+    background: rgba(217, 119, 6, 0.15);
+    color: #d97706;
+}
+
+.sidebar-content [data-sidebar="menu-item"][data-active="true"] svg {
+    color: #d97706;
+}
+
+.sidebar-content [data-sidebar="menu-item"] svg {
+    color: #78716c;
+}
+
+.sidebar-content [data-sidebar="menu-item"]:hover svg {
+    color: #1c1917;
+}
+
+/* ── Nav User Overrides ── */
+.sidebar-footer [data-sidebar="menu-item"] {
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    color: #57534e;
+}
+
+.sidebar-footer [data-sidebar="menu-item"]:hover {
+    background: rgba(217, 119, 6, 0.08);
+    color: #1c1917;
+}
+
+.sidebar-footer [data-sidebar="menu-item"] svg {
+    color: #78716c;
+}
+
+.sidebar-footer [data-sidebar="menu-item"]:hover svg {
+    color: #1c1917;
+}
+
+/* ── Scrollbar Styling ── */
+.sidebar-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+    background: rgba(214, 211, 209, 0.5);
+    border-radius: 2px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(214, 211, 209, 0.8);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .sidebar-theme {
+        width: 240px !important;
+        min-width: 240px !important;
+        max-width: 240px !important;
+    }
+    
+    [data-sidebar="collapsed"] .sidebar-theme {
+        width: 52px !important;
+        min-width: 52px !important;
+        max-width: 52px !important;
+    }
+    
+    .app-logo-text {
+        font-size: 0.75rem;
+    }
+    
+    .app-logo-tagline {
+        font-size: 0.4rem;
+        letter-spacing: 0.2em;
+    }
+    
+    .app-logo-icon {
+        height: 2.5rem;
+        width: 2.5rem;
+        font-size: 0.8125rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar-theme {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: 100vh !important;
+    }
+    
+    [data-sidebar="collapsed"] .sidebar-theme {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .app-logo-icon {
+        height: 2.25rem;
+        width: 2.25rem;
+        font-size: 0.75rem;
+    }
+    
+    .app-logo-text {
+        font-size: 0.75rem;
+    }
+    
+    .app-logo-tagline {
+        font-size: 0.4rem;
+        letter-spacing: 0.2em;
+    }
+    
+    .sidebar-header {
+        padding: 0.5rem 0.75rem 0.25rem;
+    }
+    
+    .sidebar-brand-btn {
+        min-height: 48px !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+    
+    .sidebar-role-badge {
+        padding: 0.1875rem 0.5rem;
+        margin: 0.1875rem 0.5rem 0.1875rem;
+        min-height: 24px;
+    }
+    
+    .sidebar-role-badge-text {
+        font-size: 0.5625rem;
+    }
+    
+    .sidebar-role-badge-icon {
+        font-size: 0.6875rem;
+    }
+    
+    .sidebar-content {
+        padding: 0.375rem 0.5rem;
+    }
+    
+    .sidebar-footer {
+        padding: 0.375rem 0.5rem 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar-theme {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .app-logo-icon {
+        height: 2rem;
+        width: 2rem;
+        font-size: 0.625rem;
+        border-radius: 0.5rem;
+    }
+    
+    .app-logo-text {
+        font-size: 0.688rem;
+    }
+    
+    .app-logo-tagline {
+        font-size: 0.375rem;
+        letter-spacing: 0.15em;
+    }
+    
+    .app-logo {
+        gap: 0.375rem;
+    }
+    
+    .sidebar-header {
+        padding: 0.375rem 0.5rem 0.25rem;
+    }
+    
+    .sidebar-brand-btn {
+        min-height: 40px !important;
+        padding: 0.1875rem 0.375rem !important;
+    }
+    
+    .sidebar-role-badge {
+        padding: 0.125rem 0.375rem;
+        margin: 0.125rem 0.375rem;
+        min-height: 20px;
+        border-radius: 9999px;
+    }
+    
+    .sidebar-role-badge-text {
+        font-size: 0.5rem;
+        letter-spacing: 0.04em;
+    }
+    
+    .sidebar-role-badge-icon {
+        font-size: 0.625rem;
+    }
+    
+    .sidebar-content {
+        padding: 0.25rem 0.375rem;
+    }
+    
+    .sidebar-footer {
+        padding: 0.25rem 0.375rem 0.375rem;
+    }
+    
+    [data-sidebar="collapsed"] .sidebar-role-badge {
+        min-width: 20px;
+        padding: 0.125rem;
+        margin: 0.125rem;
+    }
+    
+    [data-sidebar="collapsed"] .sidebar-role-badge-icon {
+        font-size: 0.75rem;
+    }
+    
+    [data-sidebar="collapsed"] .app-logo-icon {
+        height: 1.75rem;
+        width: 1.75rem;
+        font-size: 0.5625rem;
+    }
+}
+
+/* ── Dark Mode Support ── */
+@media (prefers-color-scheme: dark) {
+    .sidebar-theme {
+        --sidebar-background: #1c1917;
+        --sidebar-foreground: #e5e7eb;
+        --sidebar-border: #374151;
+        background: var(--sidebar-background) !important;
+    }
+    
+    .sidebar-header {
+        background: linear-gradient(135deg, #292524 0%, #1c1917 100%);
+        border-bottom-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .app-logo-text {
+        color: #ffffff;
+    }
+    
+    .app-logo-tagline {
+        color: #fbbf24;
+    }
+    
+    .app-logo-icon {
+        background: linear-gradient(135deg, #ffffff, #e5e7eb);
+        color: #1c1917;
+        box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar-brand-btn:hover {
+        background: rgba(255, 255, 255, 0.05) !important;
+    }
+    
+    .sidebar-brand-btn:hover .app-logo-icon {
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+    }
+    
+    .sidebar-role-badge {
+        background: rgba(251, 191, 36, 0.1);
+        border-color: rgba(251, 191, 36, 0.2);
+    }
+    
+    .sidebar-role-badge-text {
+        color: #fbbf24;
+    }
+    
+    .sidebar-content [data-sidebar="menu-item"] {
+        color: #a8a29e;
+    }
+    
+    .sidebar-content [data-sidebar="menu-item"]:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+    }
+    
+    .sidebar-content [data-sidebar="menu-item"][data-active="true"] {
+        background: rgba(251, 191, 36, 0.15);
+        color: #fbbf24;
+    }
+    
+    .sidebar-content [data-sidebar="menu-item"][data-active="true"] svg {
+        color: #fbbf24;
+    }
+    
+    .sidebar-content [data-sidebar="menu-item"] svg {
+        color: #78716c;
+    }
+    
+    .sidebar-content [data-sidebar="menu-item"]:hover svg {
+        color: #ffffff;
+    }
+    
+    .sidebar-footer {
+        border-top-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .sidebar-footer [data-sidebar="menu-item"] {
+        color: #a8a29e;
+    }
+    
+    .sidebar-footer [data-sidebar="menu-item"]:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+    }
+    
+    .sidebar-footer [data-sidebar="menu-item"] svg {
+        color: #78716c;
+    }
+    
+    .sidebar-footer [data-sidebar="menu-item"]:hover svg {
+        color: #ffffff;
+    }
+    
+    .sidebar-content::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .sidebar-content::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.25);
+    }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar-theme,
+    .sidebar-brand-btn,
+    .app-logo-icon,
+    .sidebar-content [data-sidebar="menu-item"],
+    .sidebar-role-badge {
+        transition-duration: 0.01ms !important;
+    }
+}
