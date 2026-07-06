@@ -1,5 +1,6 @@
 ﻿import { useEffect, useState } from 'react';
 import { Head } from '@inertiajs/react';
+import { PenLine, MousePointerClick, LineChart, ArrowRight } from 'lucide-react';
 
 const faqItems = [
     {
@@ -13,6 +14,33 @@ const faqItems = [
     {
         question: 'Is there a free plan?',
         answer: 'Loop is free for up to three habits. Beyond that, a small monthly plan unlocks unlimited habits and history export.',
+    },
+];
+
+const steps = [
+    {
+        index: '01',
+        title: 'Name the routine',
+        copy: 'Write it the way you would say it out loud — "stretch after coffee," not "Habit_003."',
+        image: 'https://picsum.photos/id/20/700/500',
+        alt: 'Open notebook with a pen, used to jot down a new routine',
+        Icon: PenLine,
+    },
+    {
+        index: '02',
+        title: "Mark it, don't manage it",
+        copy: 'One tap logs the day. No notes, no mood scores, unless you actually want them.',
+        image: 'https://picsum.photos/id/96/700/500',
+        alt: 'Hand tapping a phone screen to log a habit',
+        Icon: MousePointerClick,
+    },
+    {
+        index: '03',
+        title: 'See the honest shape of it',
+        copy: 'Loop shows real patterns — including the gaps — instead of hiding misses behind a badge.',
+        image: 'https://picsum.photos/id/1040/700/500',
+        alt: 'Notebook with a hand-drawn chart showing progress over time',
+        Icon: LineChart,
     },
 ];
 
@@ -148,21 +176,65 @@ export default function Welcome() {
                         </div>
                     </section>
 
-                    <section className="border-y border-stone-900/10 bg-white/70" id="how">
-                        <div className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10">
-                            <h2 className="text-3xl font-semibold sm:text-4xl">Three honest steps</h2>
-                            <p className="mt-3 max-w-2xl text-lg leading-8 text-stone-700">No onboarding maze. Loop gets out of the way fast.</p>
+                    {/* ============================================================ */}
+                    {/* HOW IT WORKS — redesigned                                     */}
+                    {/* ============================================================ */}
+                    <section className="relative overflow-hidden border-y border-stone-900/10 bg-white/70" id="how">
+                        {/* soft ambient blob, purely decorative */}
+                        <div
+                            className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl"
+                            aria-hidden="true"
+                        />
 
-                            <div className="mt-12 grid gap-6 lg:grid-cols-3">
-                                {[
-                                    ['01', 'Name the routine', 'Write it the way you would say it out loud — “stretch after coffee,” not “Habit_003.”'],
-                                    ['02', 'Mark it, don’t manage it', 'One tap logs the day. No notes, no mood scores, unless you actually want them.'],
-                                    ['03', 'See the honest shape of it', 'Loop shows real patterns — including the gaps — instead of hiding misses behind a badge.'],
-                                ].map(([index, title, copy]) => (
-                                    <article key={title} className="rounded-[2rem] border border-stone-900/10 bg-[#f7efe8] p-8 shadow-sm">
-                                        <span className="text-sm font-semibold uppercase tracking-[0.3em] text-stone-500">{index}</span>
-                                        <h3 className="mt-5 text-2xl font-semibold">{title}</h3>
-                                        <p className="mt-4 text-base leading-7 text-stone-700">{copy}</p>
+                        <div className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10 lg:py-28">
+                            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                                <div>
+                                    <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-600">The process</p>
+                                    <h2 className="mt-3 font-['Fraunces'] text-3xl sm:text-4xl">Three honest steps</h2>
+                                </div>
+                                <p className="max-w-sm text-lg leading-7 text-stone-700">
+                                    No onboarding maze. Loop gets out of the way fast.
+                                </p>
+                            </div>
+
+                            <div className="relative mt-16 grid gap-8 lg:grid-cols-3">
+                                {/* connecting line, desktop only */}
+                                <div
+                                    className="pointer-events-none absolute left-[16.5%] right-[16.5%] top-[7.5rem] hidden h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent lg:block"
+                                    aria-hidden="true"
+                                />
+
+                                {steps.map(({ index, title, copy, image, alt, Icon }, i) => (
+                                    <article
+                                        key={title}
+                                        className="group relative flex flex-col overflow-hidden rounded-[2rem] border border-stone-900/10 bg-[#f7efe8] shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-stone-900/10"
+                                    >
+                                        <div className="relative h-44 overflow-hidden">
+                                            <img
+                                                src={image}
+                                                alt={alt}
+                                                className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-stone-900/10 to-transparent" />
+                                            <span className="absolute left-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 font-mono text-xs font-semibold text-stone-900 shadow-sm">
+                                                {index}
+                                            </span>
+                                        </div>
+
+                                        <div className="flex flex-1 flex-col p-8">
+                                            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-full bg-stone-900 text-white transition-colors duration-300 group-hover:bg-amber-500">
+                                                <Icon className="h-5 w-5" strokeWidth={1.75} />
+                                            </div>
+                                            <h3 className="text-2xl font-semibold">{title}</h3>
+                                            <p className="mt-4 flex-1 text-base leading-7 text-stone-700">{copy}</p>
+
+                                            {i < steps.length - 1 && (
+                                                <ArrowRight
+                                                    className="mt-6 hidden h-5 w-5 text-stone-300 lg:block"
+                                                    aria-hidden="true"
+                                                />
+                                            )}
+                                        </div>
                                     </article>
                                 ))}
                             </div>
@@ -176,7 +248,7 @@ export default function Welcome() {
                         <div className="mt-12 grid gap-6 md:grid-cols-2">
                             <figure className="overflow-hidden rounded-[2rem] border border-stone-900/10 bg-white shadow-sm md:col-span-2">
                                 <img src="https://picsum.photos/id/1011/1000/700" alt="Runner tying shoes before a morning run" className="h-72 w-full object-cover" />
-                                <figcaption className="px-5 py-4 text-sm text-stone-600">Run habit — logged before the coffee’s even ready.</figcaption>
+                                <figcaption className="px-5 py-4 text-sm text-stone-600">Run habit — logged before the coffee's even ready.</figcaption>
                             </figure>
                             <figure className="overflow-hidden rounded-[2rem] border border-stone-900/10 bg-white shadow-sm">
                                 <img src="https://picsum.photos/id/1025/700/900" alt="Dog resting beside a reading habit tracker on a desk" className="h-72 w-full object-cover" />
@@ -198,7 +270,7 @@ export default function Welcome() {
                             <div>
                                 <h2 className="text-3xl font-semibold sm:text-4xl">The grid tells the truth</h2>
                                 <p className="mt-5 text-lg leading-8 text-stone-700">
-                                    Every square is a real day. Filled means you showed up. Empty means you didn’t — and that’s fine, it’s just data.
+                                    Every square is a real day. Filled means you showed up. Empty means you didn't — and that's fine, it's just data.
                                 </p>
                                 <ul className="mt-8 space-y-3 text-sm uppercase tracking-[0.25em] text-stone-600">
                                     <li className="flex items-center gap-3"><span className="h-3.5 w-3.5 rounded-full bg-stone-900" /> Logged</li>
