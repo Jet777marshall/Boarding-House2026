@@ -1,13 +1,14 @@
+import AppLogoIcon from './app-logo-icon';
+
 export default function AppLogo() {
     return (
-        <div className="app-logo">
-            <div className="app-logo-icon">
-                <span className="app-logo-initials">DH</span>
+        <>
+            <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-md">
+                <AppLogoIcon className="size-5 fill-current text-white dark:text-black" />
             </div>
-            <div className="app-logo-text-wrapper">
-                <span className="app-logo-text">The Dorm Hub</span>
-                <span className="app-logo-tagline">PREMIUM BOARDING HOUSE</span>
+            <div className="ml-1 grid flex-1 text-left text-sm">
+                <span className="mb-0.5 truncate leading-none font-semibold">Laravel Starter Kit</span>
             </div>
-        </div>
+        </>
     );
 }
