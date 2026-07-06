@@ -237,10 +237,10 @@ export default function Welcome() {
                                 Contact
                             </a>
                             <a 
-                                href="#booking" 
+                                href={route('login')} 
                                 className="group relative overflow-hidden rounded-full bg-stone-900 px-6 py-2.5 text-sm font-medium uppercase tracking-[0.2em] text-white transition-all hover:bg-stone-700"
                             >
-                                <span className="relative z-10">Book Now</span>
+                                <span className="relative z-10">Login</span>
                                 <span className="absolute inset-0 translate-y-full bg-amber-500 transition-transform duration-300 group-hover:translate-y-0" />
                             </a>
                         </div>
@@ -283,8 +283,8 @@ export default function Welcome() {
                                     <a href="#contact" className="rounded-full border border-stone-900/20 px-4 py-2.5 text-center transition hover:bg-stone-900 hover:text-white">
                                         Contact
                                     </a>
-                                    <a href="#booking" className="rounded-full bg-stone-900 px-4 py-2.5 text-center text-white transition hover:bg-stone-700">
-                                        Book Now
+                                    <a href={route('login')} className="rounded-full bg-stone-900 px-4 py-2.5 text-center text-white transition hover:bg-stone-700">
+                                        Login
                                     </a>
                                 </div>
                             </div>
