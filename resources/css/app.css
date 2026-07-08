@@ -372,3 +372,170 @@ a, button, input, textarea, select {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+/* Add these styles to your app.css */
+
+/* ── Sidebar Collapsed State (using Tailwind data attribute) ── */
+[data-collapsed="true"] .sidebar-content [data-sidebar="menu-item"] {
+    justify-content: center !important;
+    padding: 0.5rem !important;
+}
+
+[data-collapsed="true"] .sidebar-content [data-sidebar="menu-item"] span {
+    display: none !important;
+}
+
+[data-collapsed="true"] .sidebar-content [data-sidebar="menu-item"] svg {
+    margin-right: 0 !important;
+}
+
+[data-collapsed="true"] .sidebar-footer [data-sidebar="menu-item"] {
+    justify-content: center !important;
+    padding: 0.5rem !important;
+}
+
+[data-collapsed="true"] .sidebar-footer [data-sidebar="menu-item"] span {
+    display: none !important;
+}
+
+[data-collapsed="true"] .sidebar-footer [data-sidebar="menu-item"] svg {
+    margin-right: 0 !important;
+}
+
+/* ── Collapsed Logo ── */
+[data-collapsed="true"] .app-logo-text-wrapper {
+    display: none !important;
+}
+
+[data-collapsed="true"] .app-logo {
+    gap: 0 !important;
+    padding: 0 !important;
+    justify-content: center !important;
+}
+
+[data-collapsed="true"] .app-logo-icon {
+    height: 2.25rem !important;
+    width: 2.25rem !important;
+    font-size: 0.75rem !important;
+    border-radius: 0.5rem !important;
+}
+
+[data-collapsed="true"] .sidebar-brand-btn {
+    justify-content: center !important;
+    min-height: 48px !important;
+    padding: 0.25rem !important;
+}
+
+/* ── Collapsed Role Badge ── */
+[data-collapsed="true"] .sidebar-role-badge-text {
+    display: none !important;
+}
+
+[data-collapsed="true"] .sidebar-role-badge {
+    justify-content: center !important;
+    padding: 0.25rem !important;
+    margin: 0.25rem auto !important;
+    width: 32px !important;
+    min-height: 28px !important;
+    min-width: 28px !important;
+    border-radius: 9999px !important;
+    background: rgba(217, 119, 6, 0.15) !important;
+}
+
+[data-collapsed="true"] .sidebar-role-badge-icon {
+    font-size: 0.875rem !important;
+}
+
+/* ── Dark Mode Support ── */
+@media (prefers-color-scheme: dark) {
+    .sidebar-theme {
+        --sidebar-background: #1c1917;
+        --sidebar-foreground: #e5e7eb;
+        --sidebar-border: #374151;
+        background: var(--sidebar-background) !important;
+    }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    [data-collapsed="true"] .app-logo-text-wrapper {
+        display: flex !important;
+    }
+    
+    [data-collapsed="true"] .app-logo {
+        gap: 0.625rem !important;
+        padding: 0.25rem 0 !important;
+        justify-content: center !important;
+    }
+    
+    [data-collapsed="true"] .app-logo-icon {
+        height: 2.25rem !important;
+        width: 2.25rem !important;
+        font-size: 0.75rem !important;
+        border-radius: 0.75rem !important;
+    }
+    
+    [data-collapsed="true"] .sidebar-brand-btn {
+        justify-content: flex-start !important;
+        min-height: 48px !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+    
+    [data-collapsed="true"] .sidebar-role-badge-text {
+        display: inline !important;
+    }
+    
+    [data-collapsed="true"] .sidebar-role-badge {
+        justify-content: center !important;
+        padding: 0.1875rem 0.5rem !important;
+        margin: 0.1875rem 0.5rem 0.1875rem !important;
+        width: calc(100% - 1rem) !important;
+        min-height: 24px !important;
+        min-width: auto !important;
+        border-radius: 9999px !important;
+        background: rgba(217, 119, 6, 0.1) !important;
+    }
+    
+    [data-collapsed="true"] .sidebar-role-badge-icon {
+        font-size: 0.6875rem !important;
+    }
+    
+    [data-collapsed="true"] .sidebar-content [data-sidebar="menu-item"] {
+        justify-content: flex-start !important;
+        padding: 0.5rem 0.75rem !important;
+    }
+    
+    [data-collapsed="true"] .sidebar-content [data-sidebar="menu-item"] span {
+        display: inline !important;
+    }
+    
+    [data-collapsed="true"] .sidebar-content [data-sidebar="menu-item"] svg {
+        margin-right: 0.75rem !important;
+    }
+    
+    [data-collapsed="true"] .sidebar-footer [data-sidebar="menu-item"] {
+        justify-content: flex-start !important;
+        padding: 0.5rem 0.75rem !important;
+    }
+    
+    [data-collapsed="true"] .sidebar-footer [data-sidebar="menu-item"] span {
+        display: inline !important;
+    }
+    
+    [data-collapsed="true"] .sidebar-footer [data-sidebar="menu-item"] svg {
+        margin-right: 0.75rem !important;
+    }
+}
+
+
